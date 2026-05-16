@@ -88,6 +88,24 @@
   .vence-indef { color: #00CC44; font-weight: bold; text-transform: uppercase; text-shadow: 0 0 8px #fff, 0 0 3px #fff; letter-spacing: 0.5px; }
 
   /* Leyenda */
+  .links-institucionales {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 12px 0 4px 0;
+    flex-wrap: wrap;
+  }
+  .links-institucionales a {
+    color: #2B4590;
+    font-weight: bold;
+    font-size: 0.95em;
+    text-decoration: none;
+    background: #f0f4ff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #2B4590;
+  }
+  .links-institucionales a:hover { background: #2B4590; color: #fff; }
   .leyenda {
     max-width: 620px;
     margin: 0 auto 30px auto;
@@ -201,6 +219,10 @@
   <tbody id="filas-vencidas"></tbody>
 </table>
 
+<div class="links-institucionales">
+  <a href="http://www.copanestereo.com" target="_blank">🌐 copanestereo.com</a>
+  <a href="http://www.gic.hn" target="_blank">🌐 gic.hn</a>
+</div>
 <div class="leyenda">
   <div class="leyenda-item"><div class="leyenda-color" style="background:#A8CCFF"></div> Madrugada 4–8AM</div>
   <div class="leyenda-item"><div class="leyenda-color" style="background:#A8DCBA"></div> Mañana 8–11AM</div>
