@@ -653,26 +653,37 @@ setInterval(actualizar, 30000);
     <script>
     async function getSong() {
       try {
-        const r = await fetch('https://audience-headache-acetone.ngrok-free.dev/?action=playbackinfo&ngrok-skip-browser-warning=69420');
-        const t = await r.text();
-        const xml = new DOMParser().parseFromString(t, "text/xml");
-        const trk = xml.querySelector('CurrentTrack TRACK');
-        if(trk) {
-          const artist = (trk.getAttribute('ARTIST') || '').trim();
-          const title = (trk.getAttribute('TITLE') || '').trim();
-          const castTitle = (trk.getAttribute('CASTTITLE') || '').trim();
-          let displayText = 'Copán Stereo 96.3 FM';
-          
-          if(artist && title) {
-            displayText = artist + ' - ' + title;
-          } else if(castTitle) {
-            displayText = castTitle;
-          }
-          
-          document.getElementById('song-title').textContent = displayText;
+        // Agregamos timestamp para forzar que el navegador cargue la versión más nueva
+        const timestamp = new Date().getTime();
+        const r = await fetch('https://raw.githubusercontent.com/coordinacionmedios-hn/menciones-copan-stereo/main/index.html?t=' + timestamp, {cache: 'no-store'});
+        const htmlText = await r.text();
+        
+        // Extraemos el contenido del div song-title
+        const match = htmlText.match(/<div id="song-title">(.*?)<\/div>/);
+        if (match && match[1]) {
+            const newSong = match[1].trim();
+            document.getElementById('song-title').textContent = newSong;
         }
       } catch(e) {
-        console.log('Error fetching song:', e);
+        // Si falla, intentamos desde el servidor local como fallback
+        try {
+          const r2 = await fetch('https://audience-headache-acetone.ngrok-free.dev/?action=playbackinfo&ngrok-skip-browser-warning=69420');
+          const t = await r2.text();
+          const xml = new DOMParser().parseFromString(t, "text/xml");
+          const trk = xml.querySelector('CurrentTrack TRACK');
+          if(trk) {
+            const artist = (trk.getAttribute('ARTIST') || '').trim();
+            const title = (trk.getAttribute('TITLE') || '').trim();
+            const castTitle = (trk.getAttribute('CASTTITLE') || '').trim();
+            let displayText = 'Copán Stereo 96.3 FM';
+            if(artist && title) {
+              displayText = artist + ' - ' + title;
+            } else if(castTitle) {
+              displayText = castTitle;
+            }
+            document.getElementById('song-title').textContent = displayText;
+          }
+        } catch(e2) {}
       }
     }
     setInterval(getSong, 5000);
@@ -680,6 +691,7 @@ setInterval(actualizar, 30000);
     </script>
     </body>
 </html>
+
 
 
 
