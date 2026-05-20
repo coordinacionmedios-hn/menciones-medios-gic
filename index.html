@@ -230,7 +230,18 @@
       }
       .label-vivo { font-size: 0.75rem; color: #1a7a1a; font-weight: bold; margin-right: 12px; text-transform: uppercase; }
       #song-title { font-size: 0.9rem; color: #333; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
-    </style>
+    
+  .status-dot {
+    height: 8px;
+    width: 8px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+  }
+  .dot-local { background-color: #28a745; box-shadow: 0 0 5px #28a745; }
+  .dot-cloud { background-color: #007bff; box-shadow: 0 0 5px #007bff; }
+</style>
 </head>
 <body>
 <div class="header-box">
@@ -244,7 +255,7 @@
 
 <div id="widget-vivo">
   <div class="label-vivo">🎵 EN VIVO:</div>
-  <div id="song-title">FEID CON SEAN PAUL - NIÑA BONITA</div>
+  <div id="song-title"><span id="dot" class="status-dot"></span>FEID CON SEAN PAUL - NIÑA BONITA</div>
 </div>
 <table id="tabla-menciones">
   <thead>
@@ -646,10 +657,14 @@ setInterval(actualizar, 30000);
     
     async function getSong() {
       const display = document.getElementById('song-title');
+      const dot = document.getElementById('dot');
+      const ts = new Date().getTime();
       
-      // Intento 1: Servidor Local (INSTANTÁNEO)
+      // INTENTO 1: DIRECTO A LA RADIO (TIEMPO REAL)
       try {
-        const r = await fetch('https://audience-headache-acetone.ngrok-free.dev/?action=playbackinfo&ngrok-skip-browser-warning=69420');
+        const r = await fetch('https://audience-headache-acetone.ngrok-free.dev/?action=playbackinfo&ngrok-skip-browser-warning=69420', {
+            headers: {'ngrok-skip-browser-warning': '69420'}
+        });
         const t = await r.text();
         const xml = new DOMParser().parseFromString(t, "text/xml");
         const trk = xml.querySelector('CurrentTrack TRACK');
@@ -658,25 +673,27 @@ setInterval(actualizar, 30000);
           const t = (trk.getAttribute('TITLE') || '').trim();
           const c = (trk.getAttribute('CASTTITLE') || '').trim();
           const song = (a && t) ? (a + ' - ' + t) : (c || 'Copán Stereo 96.3 FM');
-          if(song && song !== display.textContent) {
-            display.textContent = song;
-            return; 
-          }
+          
+          display.innerHTML = '<span id="dot" class="status-dot dot-local"></span>' + song;
+          return; // Éxito total
         }
       } catch(e) {
-        // Si falla el local, intentamos GitHub como respaldo
-        try {
-          const v = new Date().getTime();
-          const rG = await fetch(window.location.href.split('?')[0] + '?v=' + v);
-          const hG = await rG.text();
-          const match = hG.match(/<div id="song-title">(.*?)<\/div>/);
-          if (match && match[1]) {
-              const newSong = match[1].trim();
-              if (newSong !== display.textContent && newSong !== 'Sincronizando...') {
-                  display.textContent = newSong;
-              }
-          }
-        } catch(eG) {}
+        console.log("Local off, trying cloud...");
+      }
+
+      // INTENTO 2: GITHUB RAW (SALTA CACHÉ DE GITHUB PAGES)
+      try {
+        const rG = await fetch('https://raw.githubusercontent.com/coordinacionmedios-hn/menciones-copan-stereo/main/index.html?v=' + ts);
+        const hG = await rG.text();
+        const match = hG.match(/<div id="song-title">.*?<span id="dot".*?><\/span>(.*?)<\/div>/);
+        if (match && match[1]) {
+            const songG = match[1].trim();
+            if(songG !== 'Sincronizando...') {
+                display.innerHTML = '<span id="dot" class="status-dot dot-cloud"></span>' + songG;
+            }
+        }
+      } catch(eG) {
+        console.error("Cloud error:", eG);
       }
     }
     getSong();
@@ -686,6 +703,7 @@ setInterval(actualizar, 30000);
     </script>
     </body>
 </html>
+
 
 
 
