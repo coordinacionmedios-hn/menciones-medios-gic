@@ -199,7 +199,39 @@
   #modal-close:hover { color: #333; }
 </style>
 </head>
+
 <body>
+    <!-- WIDGET ZAPIA: SONANDO AHORA (RECONSTRUCCION TOTAL) -->
+    <div id="zapia-now-playing" style="text-align: center; margin: 10px auto 15px auto; padding: 10px; background: white; border-radius: 10px; border: 1px solid #ddd; max-width: 500px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <span style="font-size: 0.65rem; color: #999; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 2px;">En Vivo:</span>
+        <span id="live-song-title" style="font-size: 0.85rem; color: #1a7a1a; font-weight: bold;">Chyno Miranda & Nacho & Danny Ocean - ENTRÉGAME</span>
+    </div>
+
+    <script>
+    (function() {
+        if (window.zapiaLoaded) return;
+        window.zapiaLoaded = true;
+        async function refreshSong() {
+            try {
+                const res = await fetch('https://audience-headache-acetone.ngrok-free.dev/?action=playbackinfo');
+                const text = await res.text();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(text, "text/xml");
+                const track = xmlDoc.querySelector('CurrentTrack TRACK');
+                if(track) {
+                    const artist = track.getAttribute('ARTIST') || '';
+                    const title = track.getAttribute('TITLE') || '';
+                    const display = artist && title ? artist + ' - ' + title : 'Copán Stereo 96.3 FM';
+                    const el = document.getElementById('live-song-title');
+                    if (el && el.innerText !== display) el.innerText = display;
+                }
+            } catch(e) {}
+        }
+        setInterval(refreshSong, 5000);
+        refreshSong();
+    })();
+    </script>
+
 
 
     </div>
