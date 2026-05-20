@@ -411,9 +411,14 @@ Visítalos en Santa Rosa de Copán: ubicados en Barrio Santa Teresa y en Colonia
 
 Y si estás en Gracias, Lempira, haz tus pedidos al WhatsApp 9769-3035.
 
-Jireth Delicias Alimentarias, tradición y sabor en cada bocado.<br><br><b style="font-size: 1.15em; color: #b00000;">¡Atención Gracias, Lempira! Ya pueden visitarnos en nuestro nuevo horario de lunes a domingo, de 8:00 AM a 7:00 PM. ¡Los esperamos!</b><br><br>---
+Jireth Delicias Alimentarias, tradición y sabor en cada bocado.
 
-Mención en vivo (Versión corta / Rápida)
+¡ATENCIÓN GRACIAS, LEMPIRA!
+YA PUEDEN VISITARNOS EN NUESTRO NUEVO HORARIO:
+DE LUNES A DOMINGO, DE 8:00 AM A 7:00 PM.
+¡LOS ESPERAMOS!
+
+---Mención en vivo (Versión corta / Rápida)
 
 El FLOW es presentado por Jireth Delicias Alimentarias, con más de 20 años siendo especialistas en pizzas, pasteles temáticos y gastronomía de temporada. Disfruta de sus ensaladas fit, postres y cafés en sus ubicaciones de Santa Rosa de Copán (Barrio Santa Teresa y Colonia Miraflores), pidiendo al 2662-0171 o al WhatsApp 9701-0109. También presentes en Gracias, Lempira al WhatsApp 9769-3035. Jireth Delicias Alimentarias: haciendo cada momento especial.`,
 
@@ -494,13 +499,13 @@ Los que conocen las rolas de verdad saben que esta noche no se la pueden perder.
 Presentado por Conciertos BAC | Produce CR Entertainment y Conciertos Honduras`,
 
   "Subway": `Mención en Vivo
-Subway Series
+Subway — Menú del Día
 
-MENCIÓN 1:
-Si eres de los que siempre buscan algo diferente... Subway Series es para ti. Ahora con nuevas combinaciones favoritas que te van a hacer volver una y otra vez. Más sabores, más opciones y más razones para elegir Subway. Subway. Come bien.
+¿Ya sabés qué vas a comer hoy? En Subway tenés el mejor menú del día con los sándwiches más frescos y deliciosos de la ciudad.
 
-MENCIÓN 2:
-¿Te cuesta elegir solo un sub? Entonces prepárate... porque Subway Series ahora tiene nuevas combinaciones que están demasiado buenas. Pollo, carne, pavo... hay un sabor para cada antojo. Subway Series, siempre hay espacio para un nuevo favorito. Subway. Come bien.`
+Elegí tu pan, tus ingredientes y tu salsa favorita. Subway, hecho justo como te gusta.
+
+¡Visítanos hoy! Subway — Come Fresco.`
 };
 
 const activas = [
@@ -662,40 +667,37 @@ setInterval(actualizar, 30000);
     async function getSong() {
       const display = document.getElementById('song-display');
       const dot = document.getElementById('dot');
-      const ts = new Date().getTime();
       
-      // 1. INTENTO LOCAL (NGROK)
+      // 1. INTENTO LOCAL (Instante) - Usamos el query param para evitar el error de ngrok
       try {
-        const r = await fetch('https://audience-headache-acetone.ngrok-free.dev/?action=playbackinfo&ngrok-skip-browser-warning=1', {
-            headers: { 'ngrok-skip-browser-warning': '1' }
-        });
+        const r = await fetch('https://audience-headache-acetone.ngrok-free.dev/?action=playbackinfo&ngrok-skip-browser-warning=1');
         const t = await r.text();
         const xml = new DOMParser().parseFromString(t, "text/xml");
         const trk = xml.querySelector('CurrentTrack TRACK');
         if(trk) {
           const a = (trk.getAttribute('ARTIST') || '').trim();
-          const title = (trk.getAttribute('TITLE') || '').trim();
+          const t = (trk.getAttribute('TITLE') || '').trim();
           const c = (trk.getAttribute('CASTTITLE') || '').trim();
-          const song = (a && title) ? (a + ' - ' + title) : (c || 'Copán Stereo 96.3 FM');
+          const song = (a && t) ? (a + ' - ' + t) : (c || 'Copán Stereo 96.3 FM');
+          
           display.textContent = song;
           dot.className = 'status-dot dot-local';
           return;
         }
-      } catch(e) {}
+      } catch(e) { console.log("Local no disponible"); }
 
-      // 2. INTENTO CLOUD (GITHUB RAW)
+      // 2. INTENTO GITHUB (Respaldo)
       try {
-        const rG = await fetch('https://raw.githubusercontent.com/coordinacionmedios-hn/menciones-copan-stereo/main/index.html?v=' + ts);
-        const hG = await rG.text();
-        const match = hG.match(/<div id="song-title">.*?<span id="song-display">(.*?)<\/span>/s);
+        const v = new Date().getTime();
+        const r = await fetch('https://raw.githubusercontent.com/coordinacionmedios-hn/menciones-copan-stereo/main/index.html?v=' + v);
+        const txt = await r.text();
+        // Buscamos el contenido dentro de song-display
+        const match = txt.match(/<span id="song-display">(.*?)<\/span>/);
         if(match && match[1]) {
-          const songG = match[1].trim();
-          if(songG !== 'Sincronizando...') {
-            display.textContent = songG;
-            dot.className = 'status-dot dot-cloud';
-          }
+          display.textContent = match[1].trim();
+          dot.className = 'status-dot dot-cloud';
         }
-      } catch(eG) {}
+      } catch(e) {}
     }
     getSong();
     setInterval(getSong, 5000);
@@ -704,7 +706,6 @@ setInterval(actualizar, 30000);
     </script>
     </body>
 </html>
-
 
 
 
