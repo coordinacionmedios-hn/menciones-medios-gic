@@ -229,7 +229,30 @@
         box-sizing: border-box;
       }
       .label-vivo { font-size: 0.75rem; color: #1a7a1a; font-weight: bold; margin-right: 12px; text-transform: uppercase; }
-      #song-title { font-size: 0.75rem; color: #333; font-weight: 600; flex: 1; line-height: 1.2; word-break: break-word; }
+      #song-title { 
+    font-size: 0.85rem; 
+    color: #333; 
+    font-weight: 600; 
+    flex: 1; 
+    overflow: hidden; 
+    white-space: nowrap; 
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .marquee-content {
+    display: inline-block;
+    padding-left: 0%;
+    animation: marquee 15s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(0); }
+    90% { transform: translateX(-100%); }
+    100% { transform: translateX(-100%); }
+  }
+  #song-display { display: inline-block; }
     
   .status-dot {
     height: 8px;
@@ -256,9 +279,14 @@
 
 <div id="widget-vivo">
   <div class="label-vivo">🎵 EN VIVO:</div>
+  
   <div id="song-title">
     <span id="dot" class="status-dot"></span>
-    <span id="song-display">Sincronizando...</span>
+    <div style="overflow: hidden; width: 100%;">
+      <div class="marquee-content" id="marquee-container">
+        <span id="song-display">Sincronizando...</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -679,7 +707,7 @@ setInterval(actualizar, 30000);
           const title = (trk.getAttribute('TITLE') || '').trim();
           const c = (trk.getAttribute('CASTTITLE') || '').trim();
           const song = (a && title) ? (a + ' - ' + title) : (c || 'Copán Stereo 96.3 FM');
-          display.textContent = song;
+          document.getElementById('song-display').textContent = song;
           dot.className = 'status-dot dot-local';
           return;
         }
@@ -706,6 +734,7 @@ setInterval(actualizar, 30000);
     </script>
     </body>
 </html>
+
 
 
 
