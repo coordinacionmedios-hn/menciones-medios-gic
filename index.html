@@ -652,7 +652,7 @@ setInterval(actualizar, 30000);
 <script>
 async function refreshSong() {
   try {
-    const res = await fetch('https://audience-headache-acetone.ngrok-free.dev/?action=playbackinfo');
+    const res = await fetch('https://audience-headache-acetone.ngrok-free.dev/?action=playbackinfo', { headers: { 'ngrok-skip-browser-warning': 'true' } });
     if(!res.ok) return;
     const text = await res.text();
     const parser = new DOMParser();
