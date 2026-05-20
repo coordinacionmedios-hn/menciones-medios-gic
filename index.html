@@ -223,12 +223,7 @@
 
     <script>
     // Datos inyectados dinámicamente por Zapia
-    const ZAPIA_DATA = {
-        song: "—",
-        artist: "",
-        weather: "20°C",
-        usd: "—"
-    };
+    const ZAPIA_DATA = { song: "I Just Might", artist: "Bruno Mars", weather: "20°C", usd: "L. 26.60" };
     
     document.getElementById('now-playing').textContent = (ZAPIA_DATA.artist && ZAPIA_DATA.song) ? ZAPIA_DATA.artist + ' - ' + ZAPIA_DATA.song : '—';
     document.getElementById('weather').textContent = ZAPIA_DATA.weather;
