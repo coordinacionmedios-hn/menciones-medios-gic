@@ -258,19 +258,6 @@
   },
   {
     "dias": "L-S",
-    "marca": "Pulmo Grip ",
-    "version": "Pulmogrip 2025 mix 1",
-    "inicio": "23/04/2025",
-    "fin": "23/05/2026",
-    "total_spots": 8,
-    "menciones": 0,
-    "hours": [
-      "●",
-      "●"
-    ]
-  },
-  {
-    "dias": "L-S",
     "marca": "Cánada Dry",
     "version": "Frescura para compartir",
     "inicio": "18/02/2026",
@@ -296,16 +283,6 @@
     "inicio": "CANJES ",
     "fin": "CANJES ",
     "total_spots": 0,
-    "menciones": 0,
-    "hours": []
-  },
-  {
-    "dias": "L-D",
-    "marca": "Junior H",
-    "version": "Radio Spot 1",
-    "inicio": "14/04/2026",
-    "fin": "20/05/2026",
-    "total_spots": 6,
     "menciones": 0,
     "hours": []
   },
@@ -339,16 +316,6 @@
     "fin": "12/06/2026",
     "total_spots": 5,
     "menciones": 0,
-    "hours": []
-  },
-  {
-    "dias": "L-S",
-    "marca": "FumiServ",
-    "version": "Spot + Mención (Canje Aniversario)",
-    "inicio": "22/04/2026",
-    "fin": "22/05/2026",
-    "total_spots": 8,
-    "menciones": 1,
     "hours": []
   }
 ]
