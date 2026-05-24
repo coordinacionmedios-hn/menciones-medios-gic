@@ -1,0 +1,354 @@
+[
+  {
+    "dias": "L-S",
+    "marca": "Laboratorio Romero",
+    "version": "Spot institucional",
+    "inicio": "20/05/2026",
+    "fin": "20/11/2026",
+    "total_spots": 5,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Jireth",
+    "version": "Genérico",
+    "inicio": "08/04/2025",
+    "fin": "08/10/2026",
+    "total_spots": 5,
+    "menciones": 2,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Truly Nolen",
+    "version": "Spot ",
+    "inicio": "12/09/2025",
+    "fin": "12/09/2026",
+    "total_spots": 5,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Cooperativa Río Grande",
+    "version": "Spot ",
+    "inicio": "07/02/2026",
+    "fin": "07/08/2026",
+    "total_spots": 6,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Orthodontics By Murillo",
+    "version": "Institucional",
+    "inicio": "20/12/2025",
+    "fin": "20/06/2026",
+    "total_spots": 8,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Cofisa",
+    "version": "Vehículo usado - Mi Pyme",
+    "inicio": "12/04/2025",
+    "fin": "10/06/2026",
+    "total_spots": 8,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Ferreteria el Baratillo ",
+    "version": "Varias Voces",
+    "inicio": "28/03/2025",
+    "fin": "28/09/2026",
+    "total_spots": 6,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "One Stop",
+    "version": "Genérico",
+    "inicio": "EN PAUSA",
+    "fin": "Indefinido",
+    "total_spots": 5,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-D",
+    "marca": "Copán Stereo 96.3 FM",
+    "version": "Promo Día de la Madre 2026",
+    "inicio": "01/05/2026",
+    "fin": "31/05/2026",
+    "total_spots": 20,
+    "menciones": 0,
+    "hours": [
+      "X",
+      "X",
+      "X"
+    ]
+  },
+  {
+    "dias": "L-D",
+    "marca": "Ruta del rock manteniemineto ",
+    "version": "Genérico ambas radios",
+    "inicio": "indefinido ",
+    "fin": "Indefinido",
+    "total_spots": 10,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-D",
+    "marca": "Jingle gic institucional ",
+    "version": "Génerico 14 Años",
+    "inicio": "indefinido ",
+    "fin": "Indefinido",
+    "total_spots": 20,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-D",
+    "marca": "La Racha",
+    "version": "Activa La Racha",
+    "inicio": "indefinido ",
+    "fin": "Indefinido",
+    "total_spots": 20,
+    "menciones": 1,
+    "hours": []
+  },
+  {
+    "dias": null,
+    "marca": "AGENCIAS",
+    "version": "AGENCIAS",
+    "inicio": "AGENCIAS",
+    "fin": "AGENCIAS",
+    "total_spots": 0,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Corp. Flores [Institucional Anual] (HÍBRIDOS CROSS)",
+    "version": "HÍBRIDOS CROSS",
+    "inicio": "28/02/2026",
+    "fin": "06/01/2027",
+    "total_spots": 6,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Corp. Flores [Institucional Anual] (VEHÍCULO USADO)",
+    "version": "VEHÍCULO USADO",
+    "inicio": "06/01/2026",
+    "fin": "06/01/2027",
+    "total_spots": 6,
+    "menciones": 0,
+    "hours": [
+      "●"
+    ]
+  },
+  {
+    "dias": "L-S",
+    "marca": "Corp. Flores [Producto Automotriz] (ENEOS)",
+    "version": "Lubricantes ENEOS",
+    "inicio": "06/01/2026",
+    "fin": "06/01/2027",
+    "total_spots": 12,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Corp. Flores [Repuestos] (REPUESTOS GENUINOS)",
+    "version": "REPUESTOS GENUINOS",
+    "inicio": "06/01/2026",
+    "fin": "06/01/2027",
+    "total_spots": 12,
+    "menciones": 0,
+    "hours": [
+      "●"
+    ]
+  },
+  {
+    "dias": "L-S",
+    "marca": "Asiatikos Parts",
+    "version": "Genérico",
+    "inicio": "01/05/2026",
+    "fin": "01/11/2026",
+    "total_spots": 8,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Bigos ",
+    "version": "Spot ",
+    "inicio": "15/03/2025",
+    "fin": "15/06/2026",
+    "total_spots": 5,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-D",
+    "marca": "Banpais ",
+    "version": "Agente/Remesas",
+    "inicio": "13/05/2026",
+    "fin": "12/06/2026",
+    "total_spots": 8,
+    "menciones": 2,
+    "hours": [
+      "●",
+      "●",
+      "●"
+    ]
+  },
+  {
+    "dias": "L-S",
+    "marca": "Arina la Rosa",
+    "version": "Baleadas",
+    "inicio": "03/05/2026",
+    "fin": "03/06/2026",
+    "total_spots": 10,
+    "menciones": 9,
+    "hours": [
+      "V1",
+      "V1"
+    ]
+  },
+  {
+    "dias": "L-S",
+    "marca": "Espresso americano",
+    "version": "Jingle + TAG ON MUNDIAL",
+    "inicio": "01/05/2026",
+    "fin": "31/05/2026",
+    "total_spots": 10,
+    "menciones": 9,
+    "hours": []
+  },
+  {
+    "dias": "L-D",
+    "marca": "Nestlé - Nestógeno 3",
+    "version": "Mix-2 30ss",
+    "inicio": "11/05/2026",
+    "fin": "31/05/2026",
+    "total_spots": 12,
+    "menciones": 0,
+    "hours": [
+      "X"
+    ]
+  },
+  {
+    "dias": "L-S",
+    "marca": "Subway ",
+    "version": "2 Versiones Rotadas",
+    "inicio": "01/05/2026",
+    "fin": "31/05/2026",
+    "total_spots": 7,
+    "menciones": 3,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Pulmo Grip ",
+    "version": "Pulmogrip 2025 mix 1",
+    "inicio": "23/04/2025",
+    "fin": "23/05/2026",
+    "total_spots": 8,
+    "menciones": 0,
+    "hours": [
+      "●",
+      "●"
+    ]
+  },
+  {
+    "dias": "L-S",
+    "marca": "Cánada Dry",
+    "version": "Frescura para compartir",
+    "inicio": "18/02/2026",
+    "fin": "Indefinido",
+    "total_spots": 7,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": null,
+    "marca": "PATROCINIO ",
+    "version": "PATROCINIO ",
+    "inicio": "PATROCINIO ",
+    "fin": "PATROCINIO ",
+    "total_spots": 0,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": null,
+    "marca": "CANJES ",
+    "version": "CANJES ",
+    "inicio": "CANJES ",
+    "fin": "CANJES ",
+    "total_spots": 0,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-D",
+    "marca": "Junior H",
+    "version": "Radio Spot 1",
+    "inicio": "14/04/2026",
+    "fin": "20/05/2026",
+    "total_spots": 6,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "Datos Compu +",
+    "version": "Spot (version femenino)",
+    "inicio": "04/12/2023",
+    "fin": "Indefinido",
+    "total_spots": 6,
+    "menciones": 2,
+    "hours": []
+  },
+  {
+    "dias": "L-D",
+    "marca": "Asados La Entrada",
+    "version": "Spot ExpoCapón",
+    "inicio": "13/05/2026",
+    "fin": "13/06/2026",
+    "total_spots": 5,
+    "menciones": 2,
+    "hours": [
+      "X"
+    ]
+  },
+  {
+    "dias": "L-D",
+    "marca": "La Casa de Doña Olimpia",
+    "version": "Spot",
+    "inicio": "12/05/2026",
+    "fin": "12/06/2026",
+    "total_spots": 5,
+    "menciones": 0,
+    "hours": []
+  },
+  {
+    "dias": "L-S",
+    "marca": "FumiServ",
+    "version": "Spot + Mención (Canje Aniversario)",
+    "inicio": "22/04/2026",
+    "fin": "22/05/2026",
+    "total_spots": 8,
+    "menciones": 1,
+    "hours": []
+  }
+]
