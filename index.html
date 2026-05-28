@@ -258,7 +258,7 @@
   <div class="label-vivo">🎵 EN VIVO:</div>
   <div id="song-title">
     <span id="dot" class="status-dot"></span>
-    <span id="song-display">TOñO ROSARIO - ENAMORADO</span>
+    <span id="song-display">Sincronizando...</span>
   </div>
 </div>
 
@@ -673,15 +673,18 @@ setInterval(actualizar, 30000);
 
     <script>
     
+    
     async function getSong() {
       const display = document.getElementById('song-display');
       const dot = document.getElementById('dot');
       const ts = new Date().getTime();
       
-      // 1. INTENTO LOCAL (NGROK)
+      let found = false;
+
+      // 1. INTENTO LOCAL (CLOUDFLARE TUNNEL)
       try {
-        const r = await fetch('https://cached-photographer-wilderness-remainder.trycloudflare.com/?action=playbackinfo', {
-            headers: { 'ngrok-skip-browser-warning': '1' }
+        const r = await fetch('https://informal-belfast-hay-realized.trycloudflare.com/?action=playbackinfo', {
+             signal: AbortSignal.timeout(4000)
         });
         const t = await r.text();
         const xml = new DOMParser().parseFromString(t, "text/xml");
@@ -691,26 +694,21 @@ setInterval(actualizar, 30000);
           const title = (trk.getAttribute('TITLE') || '').trim();
           const c = (trk.getAttribute('CASTTITLE') || '').trim();
           const song = (a && title) ? (a + ' - ' + title) : (c || 'Copán Stereo 96.3 FM');
-          display.textContent = song;
+          display.textContent = song.toUpperCase();
           dot.className = 'status-dot dot-local';
-          return;
+          found = true;
         }
-      } catch(e) {}
+      } catch(e) {
+        console.log("Local fetch failed");
+      }
 
-      // 2. INTENTO CLOUD (GITHUB RAW)
-      try {
-        const rG = await fetch('https://raw.githubusercontent.com/coordinacionmedios-hn/menciones-copan-stereo/main/index.html?v=' + ts);
-        const hG = await rG.text();
-        const match = hG.match(/<div id="song-title">.*?<span id="song-display">(.*?)<\/span>/s);
-        if(match && match[1]) {
-          const songG = match[1].trim();
-          if(songG !== 'Sincronizando...') {
-            display.textContent = songG;
-            dot.className = 'status-dot dot-cloud';
-          }
-        }
-      } catch(eG) {}
+      // Si no encontro nada local, ponemos sincronizando
+      if(!found) {
+        display.textContent = 'Sincronizando...';
+        dot.className = 'status-dot';
+      }
     }
+
     getSong();
     setInterval(getSong, 5000);
 
