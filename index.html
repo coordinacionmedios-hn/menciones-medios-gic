@@ -518,6 +518,18 @@ No te pierdas ni un solo minuto de la pasión que mueve al mundo.
 ¡COMPU MÁS, conectándote con la emoción del fútbol mundial!
 ¡FOX, canal 190, exclusivo en TV digital!
 ¡La pasión del mundial, ahora en tu pantalla!`,
+  "Banco Ficohsa": `Mención en Vivo
+Banco Ficohsa — Ahorrar es Poder
+
+Cada meta comienza con una buena decisión. Deposita o incrementa tus ahorros con L1,000 o más en tu cuenta de ahorro Ficohsa y participa por L1 millón de lempiras porque Ahorrar es Poder. ¡Abre tu cuenta ya! Banco Ficohsa`,
+  "Banco Cuscatlán": `Mención en Vivo
+Banco Cuscatlán — Sueña y Ahorra
+
+MENCIÓN 1:
+Si meter un gol emociona, imagínate incrementar tus ahorros y ganar. Con Sueña y Ahorra de Banco Cuscatlán, por cada L1,000 recibes un boleto electrónico para ganar uno de los 25 Smart TVs de 58 pulgadas. Banco Cuscatlán, tu dinero juega por ti.
+
+MENCIÓN 2:
+Abre tu cuenta o incrementa tus ahorros en Banco Cuscatlán. Con Sueña y Ahorra, por cada L1,000 recibes un boleto electrónico. Entre más ahorras, más oportunidades tienes de ganar uno de los 25 Smart TVs de 58 pulgadas. Banco Cuscatlán, tu dinero juega por ti.`,
   "UNITEC": `Mención en Vivo
 UNITEC — Medicina y Diseño de Modas
 
@@ -539,6 +551,7 @@ MENCIÓN 2:
 const activas = [
   { hora:"6:45 AM",  min:6*60+45,  cliente:"Banpaís",            vence:"10/06/2026", turno:"madrugada" },
   { hora:"7:05 AM",  min:7*60+5,   cliente:"Espresso Americano", vence:"Indefinido",  turno:"madrugada" },
+  { hora:"7:15 AM",   min:435,  cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"madrugada" },
   { hora:"7:40 AM",  min:7*60+40,  cliente:"Banpaís",            vence:"10/06/2026", turno:"madrugada" },
   { hora:"8:10 AM",  min:490,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"manana" },
   { hora:"8:20 AM",  min:8*60+20,  cliente:"Sky Tours",          vence:"15/11/2026", turno:"manana" },
@@ -550,11 +563,13 @@ const activas = [
   { hora:"9:55 AM",  min:9*60+55,  cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"manana" },
   { hora:"10:15 AM", min:10*60+15, cliente:"Subway",             vence:"Indefinido",  turno:"manana" },
   { hora:"10:25 AM",  min:625,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"manana" },
+  { hora:"10:45 AM", min:645,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"manana" },
   { hora:"11:20 AM", min:680,  cliente:"COMPU+ DATOS",    vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
   { hora:"11:40 AM",  min:700,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
   { hora:"12:05 PM", min:12*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
   { hora:"12:20 PM",  min:740,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
   { hora:"12:40 PM", min:12*60+40, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
+  { hora:"12:45 PM", min:765,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
   { hora:"1:05 PM",  min:13*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
   { hora:"1:25 PM",  min:13*60+25, cliente:"Subway",             vence:"Indefinido",  turno:"tarde" },
   { hora:"1:40 PM",  min:13*60+40, cliente:"BP Remesas",         vence:"12/06/2026", turno:"tarde" },
@@ -566,6 +581,7 @@ const activas = [
   { hora:"3:05 PM",  min:15*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
   { hora:"3:20 PM",  min:15*60+20, cliente:"Sky Tours",          vence:"15/11/2026", turno:"tarde" },
   { hora:"3:35 PM",  min:15*60+35, cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+  { hora:"3:45 PM",  min:945,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"tarde" },
   { hora:"5:45 PM",  min:17*60+45, cliente:"Espresso Americano", vence:"Indefinido",  turno:"atardecer" }
 ];
 
@@ -587,7 +603,6 @@ const vencidas = [
   { hora:"2:20 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
   { hora:"3:40 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
   { hora:"4:50 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
-  { hora:"7:15 AM", cliente:"Banco Cuscatlán", vence:"07/05/2026" },
 ];
 
 // Render activas
