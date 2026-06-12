@@ -596,7 +596,7 @@ const activas = [
   { hora:"10:45 AM", min:645,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"manana" },
   { hora:"11:10 AM", min:670,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"mediodia", bg:"amarillo" },
   { hora:"11:20 AM", min:680,  cliente:"COMPU+ DATOS",    vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
-  { hora:"11:30 AM", min:11*60+30, cliente:"Aquaroni",           vence:"13/08/2026", turno:"mediodia" },
+  { hora:"11:30 AM", min:11*60+30, cliente:"Aquaroni",           vence:"13/08/2026", turno:"mediodia", bg:"amarillo" },
   { hora:"11:40 AM",  min:700,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
   { hora:"11:50 AM", min:710,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"mediodia", bg:"amarillo" },
   { hora:"12:05 PM", min:12*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
@@ -766,7 +766,7 @@ setInterval(actualizar, 30000);
 
       // 1. INTENTO LOCAL (CLOUDFLARE TUNNEL)
       try {
-        const r = await fetch('https://brunswick-bay-sean-market.trycloudflare.com/?action=playbackinfo', {
+        const r = await fetch('https://promoted-refinance-palm-heights.trycloudflare.com/?action=playbackinfo', {
              signal: AbortSignal.timeout(4000)
         });
         const t = await r.text();
