@@ -307,6 +307,17 @@
 
 <script>
 const MENCIONES = {
+  "Aquaroni": `Mención en Vivo
+Repuestos Aquaroni
+
+VERSIÓN 1:
+En repuestos acquaroni hemos armado la mejor selección de todas , buscando alrededor del planeta  a los mejores repuestos para tu auto de marcas reconocidas y con total garantia que solo repuestos acquaroni te puede dar, cuando necesites repuestos solo busca la señal y los encontraras, Repuestos acquaroni. La señal de los repuestos. De la tierra en la que nació este apasionante deporte llega a honduras el lubricante A. Z. TEC con el respaldo de Repuestos Aquaroni. 
+
+VERSIÓN 2:
+¡La señal que te guía a los repuestos que tu auto necesita está en Santa Rosa de Copán! Repuestos Aquaroni. Visítanos en Barrio Miraflores frente a las bodegas de distribuidora la occidental.
+Tenemos todo en motor, suspensión, dirección, frenos, sistema eléctrico, coolant y aceites. Pide tus repuestos al 3151-8028 y recibe a domicilio sin costo adicional.
+Te esperamos en Repuestos Aquaroni, la señal de los repuestos.`,
+
   "Lagos Joyeros": `Mención en Vivo
 Lagos Joyeros — Especial de Junio
 
@@ -567,7 +578,48 @@ MENCIÓN 2:
 ¿Te cuesta elegir solo un sub? Entonces prepárate... porque Subway Series ahora tiene nuevas combinaciones que están demasiado buenas. Pollo, carne, pavo... hay un sabor para cada antojo. Subway Series, siempre hay espacio para un nuevo favorito. Subway. Come bien.`
 };
 const activas = [
-{ hora:"7:05 AM",  min:7*60+5,   cliente:"Espresso Americano", vence:"Indefinido",  turno:"madrugada" },{ hora:"7:15 AM",   min:435,  cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"madrugada" },{ hora:"8:10 AM",  min:490,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"manana" },{ hora:"8:20 AM",  min:8*60+20,  cliente:"Sky Tours",          vence:"15/11/2026", turno:"manana" },{ hora:"8:45 AM",  min:8*60+45,  cliente:"BP Agentes",         vence:"12/06/2026", turno:"manana" },{ hora:"8:50 AM",  min:8*60+50,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },{ hora:"9:10 AM",  min:9*60+10,  cliente:"Subway",             vence:"Indefinido",  turno:"manana" },{ hora:"9:20 AM",  min:9*60+20,  cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"manana" },{ hora:"9:45 AM",  min:9*60+45,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },{ hora:"9:55 AM",  min:9*60+55,  cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"manana" },{ hora:"10:05 AM", min:605,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"manana" },{ hora:"10:15 AM", min:10*60+15, cliente:"Subway",             vence:"Indefinido",  turno:"manana" },{ hora:"10:20 AM", min:620,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"manana" },{ hora:"10:25 AM",  min:625,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"manana" },{ hora:"10:45 AM", min:645,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"manana" },{ hora:"11:10 AM", min:670,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"mediodia", bg:"amarillo" },{ hora:"11:20 AM", min:680,  cliente:"COMPU+ DATOS",    vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },{ hora:"11:40 AM",  min:700,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },{ hora:"11:50 AM", min:710,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"mediodia", bg:"amarillo" },{ hora:"12:05 PM", min:12*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },{ hora:"12:20 PM",  min:740,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },{ hora:"12:40 PM", min:12*60+40, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },{ hora:"12:45 PM", min:765,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },{ hora:"1:05 PM",  min:13*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },{ hora:"1:25 PM",  min:13*60+25, cliente:"Subway",             vence:"Indefinido",  turno:"tarde" },{ hora:"1:40 PM",  min:13*60+40, cliente:"BP Remesas",         vence:"12/06/2026", turno:"tarde" },{ hora:"1:50 PM",  min:830,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"tarde" },{ hora:"2:05 PM",  min:14*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },{ hora:"2:25 PM",  min:14*60+25, cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"tarde" },{ hora:"2:35 PM",  min:875,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"tarde" },{ hora:"2:45 PM",  min:14*60+45, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"tarde" },{ hora:"2:50 PM",  min:890,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"tarde" },{ hora:"3:05 PM",  min:15*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },{ hora:"3:20 PM",  min:15*60+20, cliente:"Sky Tours",          vence:"15/11/2026", turno:"tarde" },{ hora:"3:35 PM",  min:15*60+35, cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },{ hora:"3:45 PM",  min:945,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"tarde" },{ hora:"5:45 PM",  min:17*60+45, cliente:"Espresso Americano", vence:"Indefinido",  turno:"atardecer" },{ hora:"6:10 PM",  min:1090,  cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"noche" },
+  { hora:"7:05 AM",  min:7*60+5,   cliente:"Espresso Americano", vence:"Indefinido",  turno:"madrugada" },
+  { hora:"7:15 AM",   min:435,  cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"madrugada" },
+  { hora:"8:10 AM",  min:490,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"manana" },
+  { hora:"8:20 AM",  min:8*60+20,  cliente:"Sky Tours",          vence:"15/11/2026", turno:"manana" },
+  { hora:"8:45 AM",  min:8*60+45,  cliente:"BP Agentes",         vence:"12/06/2026", turno:"manana" },
+  { hora:"8:50 AM",  min:8*60+50,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },
+  { hora:"9:10 AM",  min:9*60+10,  cliente:"Subway",             vence:"Indefinido",  turno:"manana" },
+  { hora:"9:20 AM",  min:9*60+20,  cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"manana" },
+  { hora:"9:30 AM",  min:9*60+30,  cliente:"Aquaroni",           vence:"13/08/2026", turno:"manana" },
+  { hora:"9:45 AM",  min:9*60+45,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },
+  { hora:"9:55 AM",  min:9*60+55,  cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"manana" },
+  { hora:"10:05 AM", min:605,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"manana" },
+  { hora:"10:15 AM", min:10*60+15, cliente:"Subway",             vence:"Indefinido",  turno:"manana" },
+  { hora:"10:20 AM", min:620,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"manana" },
+  { hora:"10:25 AM",  min:625,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"manana" },
+  { hora:"10:45 AM", min:645,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"manana" },
+  { hora:"11:10 AM", min:670,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"mediodia", bg:"amarillo" },
+  { hora:"11:20 AM", min:680,  cliente:"COMPU+ DATOS",    vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
+  { hora:"11:30 AM", min:11*60+30, cliente:"Aquaroni",           vence:"13/08/2026", turno:"mediodia" },
+  { hora:"11:40 AM",  min:700,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
+  { hora:"11:50 AM", min:710,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"mediodia", bg:"amarillo" },
+  { hora:"12:05 PM", min:12*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
+  { hora:"12:20 PM",  min:740,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
+  { hora:"12:40 PM", min:12*60+40, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
+  { hora:"12:45 PM", min:765,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
+  { hora:"1:05 PM",  min:13*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+  { hora:"1:25 PM",  min:13*60+25, cliente:"Subway",             vence:"Indefinido",  turno:"tarde" },
+  { hora:"1:40 PM",  min:13*60+40, cliente:"BP Remesas",         vence:"12/06/2026", turno:"tarde" },
+  { hora:"1:50 PM",  min:830,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"tarde" },
+  { hora:"2:05 PM",  min:14*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+  { hora:"2:15 PM",  min:14*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"tarde" },
+  { hora:"2:25 PM",  min:14*60+25, cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"tarde" },
+  { hora:"2:35 PM",  min:875,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"tarde" },
+  { hora:"2:45 PM",  min:14*60+45, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"tarde" },
+  { hora:"2:50 PM",  min:890,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"tarde" },
+  { hora:"3:05 PM",  min:15*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+  { hora:"3:20 PM",  min:15*60+20, cliente:"Sky Tours",          vence:"15/11/2026", turno:"tarde" },
+  { hora:"3:35 PM",  min:15*60+35, cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+  { hora:"3:45 PM",  min:945,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"tarde" },
+  { hora:"5:15 PM",  min:17*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"atardecer" },
+  { hora:"5:45 PM",  min:17*60+45, cliente:"Espresso Americano", vence:"Indefinido",  turno:"atardecer" },
+  { hora:"6:10 PM",  min:1090,  cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"noche" },
 ];
 
 const lrdr = [
@@ -714,7 +766,7 @@ setInterval(actualizar, 30000);
 
       // 1. INTENTO LOCAL (CLOUDFLARE TUNNEL)
       try {
-        const r = await fetch('https://promoted-refinance-palm-heights.trycloudflare.com/?action=playbackinfo', {
+        const r = await fetch('https://brunswick-bay-sean-market.trycloudflare.com/?action=playbackinfo', {
              signal: AbortSignal.timeout(4000)
         });
         const t = await r.text();
