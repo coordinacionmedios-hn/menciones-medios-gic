@@ -769,7 +769,7 @@ setInterval(actualizar, 30000);
 
       // 1. INTENTO LOCAL (CLOUDFLARE TUNNEL)
       try {
-        const r = await fetch('https://virginia-lotus-ranges-epic.trycloudflare.com/?action=playbackinfo', {
+        const r = await fetch('https://shared-trades-algorithms-guides.trycloudflare.com/?action=playbackinfo', {
              signal: AbortSignal.timeout(4000)
         });
         const t = await r.text();
