@@ -589,7 +589,6 @@ const activas = [
   { hora:"9:30 AM",  min:9*60+30,  cliente:"Aquaroni",           vence:"13/08/2026", turno:"manana" },
   { hora:"9:45 AM",  min:9*60+45,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },
   { hora:"9:50 AM",  min:590,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"manana" },
-  { hora:"9:55 AM",  min:9*60+55,  cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"manana" },
   { hora:"10:05 AM", min:605,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"manana" },
   { hora:"10:15 AM", min:10*60+15, cliente:"Subway",             vence:"Indefinido",  turno:"manana" },
   { hora:"10:20 AM", min:620,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"manana" },
@@ -612,7 +611,6 @@ const activas = [
   { hora:"1:50 PM",  min:830,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"tarde" },
   { hora:"2:05 PM",  min:14*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
   { hora:"2:15 PM",  min:14*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"tarde" },
-  { hora:"2:25 PM",  min:14*60+25, cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"tarde" },
   { hora:"2:30 PM",  min:14*60+30, cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"tarde" },
   { hora:"2:35 PM",  min:875,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"tarde" },
   { hora:"2:45 PM",  min:14*60+45, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"tarde" },
@@ -630,7 +628,9 @@ const lrdr = [
   { hora:"5:20 PM",  min:17*60+20, cliente:"Laboratorio Bueso Arias", vence:"20/06/2026" },
 ];
 
-const vencidas = [
+const vencidas = [  { hora:"9:55 AM",  min:9*60+55,  cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"manana" },
+  { hora:"2:25 PM",  min:14*60+25, cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"tarde" },
+
   { hora:"6:45 AM",  min:6*60+45,  cliente:"Banpaís",            vence:"13/07/2026", turno:"madrugada" },
   { hora:"7:40 AM",  min:7*60+40,  cliente:"Banpaís",            vence:"13/07/2026", turno:"madrugada" },
 
