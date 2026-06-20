@@ -828,44 +828,65 @@ setInterval(actualizar, 30000);
     <script>
     
     
+    let lastSong = '';
+
+    function parseTrack(xml) {
+      const trk = xml.querySelector('CurrentTrack TRACK');
+      if (!trk) return null;
+      const a = (trk.getAttribute('ARTIST') || '').trim();
+      const t = (trk.getAttribute('TITLE') || '').trim();
+      const c = (trk.getAttribute('CASTTITLE') || '').trim();
+      return (a && t) ? (a + ' - ' + t) : (c || null);
+    }
+
     async function getSong() {
       const display = document.getElementById('song-display');
       const dot = document.getElementById('dot');
-      const ts = new Date().getTime();
-      
-      let found = false;
 
-      // 1. INTENTO LOCAL (CLOUDFLARE TUNNEL)
+      // Intento 1: directo a Ngrok con header skip
       try {
-        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://ngrokhn.ngrok.pro/?action=playbackinfo');
-        const r = await fetch(proxyUrl, { signal: AbortSignal.timeout(6000) });
+        const r = await fetch('https://ngrokhn.ngrok.pro/?action=playbackinfo', {
+          signal: AbortSignal.timeout(4000),
+          headers: { 'ngrok-skip-browser-warning': '1' }
+        });
         const t = await r.text();
-        const xml = new DOMParser().parseFromString(t, "text/xml");
-        const trk = xml.querySelector('CurrentTrack TRACK');
-        if(trk) {
-          const a = (trk.getAttribute('ARTIST') || '').trim();
-          const title = (trk.getAttribute('TITLE') || '').trim();
-          const c = (trk.getAttribute('CASTTITLE') || '').trim();
-          const song = (a && title) ? (a + ' - ' + title) : (c || 'Copán Stereo 96.3 FM');
+        const xml = new DOMParser().parseFromString(t, 'text/xml');
+        const song = parseTrack(xml);
+        if (song) {
+          lastSong = song;
           display.textContent = song.toUpperCase();
           dot.className = 'status-dot dot-local';
-          found = true;
+          return;
         }
-      } catch(e) {
-        console.log("Local fetch failed");
-      }
+      } catch(e) {}
 
-      // Si no encontro nada local, ponemos sincronizando
-      if(!found) {
-        display.textContent = 'Sincronizando...';
+      // Intento 2: proxy allorigins como respaldo
+      try {
+        const url = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://ngrokhn.ngrok.pro/?action=playbackinfo');
+        const r = await fetch(url, { signal: AbortSignal.timeout(6000) });
+        const t = await r.text();
+        const xml = new DOMParser().parseFromString(t, 'text/xml');
+        const song = parseTrack(xml);
+        if (song) {
+          lastSong = song;
+          display.textContent = song.toUpperCase();
+          dot.className = 'status-dot dot-local';
+          return;
+        }
+      } catch(e) {}
+
+      // Si ambos fallan: mantener último valor conocido, no mostrar "Sincronizando"
+      if (lastSong) {
+        display.textContent = lastSong.toUpperCase();
+        dot.className = 'status-dot dot-local';
+      } else {
+        display.textContent = 'Copán Stereo 96.3 FM';
         dot.className = 'status-dot';
       }
     }
 
     getSong();
     setInterval(getSong, 5000);
-
-    getSong();
     </script>
     </body>
 </html>
