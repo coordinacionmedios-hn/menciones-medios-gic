@@ -743,6 +743,22 @@ activas.forEach((m, idx) => {
   tbody.appendChild(tr);
 });
 
+
+// Render LRDR
+const tbodyL = document.getElementById("filas-lrdr");
+lrdr.forEach((m, idx) => {
+  const tr = document.createElement("tr");
+  tr.id = "fila-lrdr-" + idx;
+  tr.className = "lrdr";
+  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+  tdC.onclick = () => abrirModal(m.cliente);
+  const tdV = document.createElement("td"); tdV.className="vence"; tdV.textContent=m.vence;
+  const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-lrdr-" + idx;
+  tr.append(tdH, tdC, tdV, tdF);
+  tbodyL.appendChild(tr);
+});
+
 // Render vencidas
 const tbodyV = document.getElementById("filas-vencidas");
 vencidas.forEach(m => {
