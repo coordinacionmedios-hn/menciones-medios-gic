@@ -682,11 +682,9 @@ const activas = [
   { hora:"5:15 PM",  min:17*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"atardecer" },
   { hora:"5:45 PM",  min:17*60+45, cliente:"Espresso Americano", vence:"Indefinido",  turno:"atardecer" }
 ];
-
 const lrdr = [
   
 ];
-
 const vencidas = [
   { hora:"7:15 AM",   min:435,  cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"madrugada" },
   { hora:"8:10 AM",  min:490,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"manana" },
@@ -728,78 +726,8 @@ const vencidas = [
   { hora:"4:50 PM", min:1010, cliente:"Junior H (Concierto)", vence:"20/05/2026" }
 ];
 
-// Render activas
-const tbody = document.getElementById("filas-activas");
-activas.forEach((m, idx) => {
-  const tr = document.createElement("tr");
-  tr.id = "fila-" + idx;
-  tr.className = m.turno + (m.bg ? " " + m.bg : "");
-
-  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
-  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
-  tdC.title = "Clic para ver la mención completa";
-  tdC.onclick = () => abrirModal(m.cliente);
-
-  const tdV = document.createElement("td");
-  tdV.className = "vence " + (m.vence==="Indefinido" ? "vence-indef" : "vence-fecha");
-  tdV.textContent = m.vence;
-
-  const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-"+idx;
-
-  tr.append(tdH, tdC, tdV, tdF);
-  tbody.appendChild(tr);
-});
-
-
-// Render LRDR
-const tbodyL = document.getElementById("filas-lrdr");
-lrdr.forEach((m, idx) => {
-  const tr = document.createElement("tr");
-  tr.id = "fila-lrdr-" + idx;
-  tr.className = "lrdr";
-  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
-  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
-  tdC.onclick = () => abrirModal(m.cliente);
-  const tdV = document.createElement("td"); tdV.className="vence"; tdV.textContent=m.vence;
-  const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-lrdr-" + idx;
-  tr.append(tdH, tdC, tdV, tdF);
-  tbodyL.appendChild(tr);
-});
-
-// Render vencidas
-const tbodyV = document.getElementById("filas-vencidas");
-vencidas.forEach(m => {
-  const tr = document.createElement("tr"); tr.className="vencida";
-  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
-  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
-  const tdV = document.createElement("td"); tdV.className="vence"; tdV.textContent=m.vence;
-  const tdF = document.createElement("td"); tdF.className="flecha";
-  tr.append(tdH, tdC, tdV, tdF);
-  tbodyV.appendChild(tr);
-});
-
-// Render LRDR
-const tbodyL = document.getElementById("filas-lrdr");
-lrdr.forEach((m, idx) => {
-  const tr = document.createElement("tr");
-  tr.id = "fila-lrdr-" + idx;
-  tr.className = "lrdr-row";
-  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
-  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
-  tdC.onclick = () => abrirModal(m.cliente);
-  tdC.title = "Clic para ver la mención completa";
-  const tdV = document.createElement("td"); 
-  tdV.className="vence " + (m.vence==="Indefinido" ? "vence-indef" : "vence-fecha");
-  tdV.textContent=m.vence;
-  const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-lrdr-"+idx;
-  tr.append(tdH, tdC, tdV, tdF);
-  tbodyL.appendChild(tr);
-});
-
-// Modal
 function abrirModal(cliente) {
-  const texto = MENCIONES[cliente] || "Mención no disponible.";
-  document.getElementById("modal-titulo").textContent = "📢 " + cliente;
+  const texto = MENCIONES[cliente] || "Contenido no disponible.";
   document.getElementById("modal-text").textContent = texto;
   document.getElementById("overlay").classList.add("visible");
 }
@@ -811,7 +739,6 @@ document.getElementById("overlay").addEventListener("click", function(e) {
 });
 document.addEventListener("keydown", e => { if(e.key==="Escape") cerrarModal(); });
 
-// Reloj y flecha
 function actualizar() {
   const now = new Date();
   const h = now.getHours(), m = now.getMinutes();
@@ -823,40 +750,66 @@ function actualizar() {
   for(let i=0; i<activas.length; i++) { if(total>=activas[i].min) activaIdx=i; }
 
   activas.forEach((_,i) => {
-    document.getElementById("fila-"+i).classList.remove("activa");
-    document.getElementById("flecha-"+i).textContent="";
+    const el = document.getElementById("fila-"+i);
+    if(el) el.classList.remove("activa");
+    const fl = document.getElementById("flecha-"+i);
+    if(fl) fl.textContent="";
   });
   if(activaIdx>=0) {
     const tr = document.getElementById("fila-"+activaIdx);
-    tr.classList.add("activa");
-    document.getElementById("flecha-"+activaIdx).textContent="👈🏻";
-    // tr.scrollIntoView({behavior:"smooth", block:"center"});
+    if(tr) tr.classList.add("activa");
+    const fl = document.getElementById("flecha-"+activaIdx);
+    if(fl) fl.textContent="👈🏻";
   }
 
-  // Flecha LRDR
   let lrdrIdx = -1;
   for(let i=0; i<lrdr.length; i++) { if(total>=lrdr[i].min) lrdrIdx=i; }
   lrdr.forEach((_,i) => {
-    const el = document.getElementById("flecha-lrdr-"+i);
     const tr = document.getElementById("fila-lrdr-"+i);
-    if(el) el.textContent="";
     if(tr) tr.classList.remove("activa");
+    const fl = document.getElementById("flecha-lrdr-"+i);
+    if(fl) fl.textContent="";
   });
   if(lrdrIdx>=0) {
     const tr = document.getElementById("fila-lrdr-"+lrdrIdx);
-    const el = document.getElementById("flecha-lrdr-"+lrdrIdx);
     if(tr) tr.classList.add("activa");
-    if(el) el.textContent="👈🏻";
+    const fl = document.getElementById("flecha-lrdr-"+lrdrIdx);
+    if(fl) fl.textContent="👈🏻";
   }
 }
+
+// Renderizado inicial
+const tbodyActivas = document.getElementById("filas-activas");
+activas.forEach((m, idx) => {
+  const tr = document.createElement("tr");
+  tr.id = "fila-" + idx;
+  tr.className = m.turno + (m.bg ? " " + m.bg : "");
+  tr.innerHTML = `<td class="hora">${m.hora}</td><td class="cliente" onclick="abrirModal('${m.cliente}')">${m.cliente}</td><td class="vence">${m.vence}</td><td class="flecha" id="flecha-${idx}"></td>`;
+  tbodyActivas.appendChild(tr);
+});
+
+const tbodyLrdr = document.getElementById("filas-lrdr");
+lrdr.forEach((m, idx) => {
+  const tr = document.createElement("tr");
+  tr.id = "fila-lrdr-" + idx;
+  tr.className = "lrdr";
+  tr.innerHTML = `<td class="hora">${m.hora}</td><td class="cliente" onclick="abrirModal('${m.cliente}')">${m.cliente}</td><td class="vence">${m.vence}</td><td class="flecha" id="flecha-lrdr-${idx}"></td>`;
+  tbodyLrdr.appendChild(tr);
+});
+
+const tbodyVencidas = document.getElementById("filas-vencidas");
+vencidas.forEach(m => {
+  const tr = document.createElement("tr");
+  tr.className = "vencida";
+  tr.innerHTML = `<td class="hora">${m.hora}</td><td class="cliente" onclick="abrirModal('${m.cliente}')">${m.cliente}</td><td class="vence">${m.vence}</td><td class="flecha"></td>`;
+  tbodyVencidas.appendChild(tr);
+});
+
 actualizar();
 setInterval(actualizar, 30000);
 </script>
-
-    <script>
-    
-    
-    async function getSong() {
+<script>
+async function getSong() {
       const display = document.getElementById('song-display');
       const dot = document.getElementById('dot');
       let found = false;
