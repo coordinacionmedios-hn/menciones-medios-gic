@@ -58,7 +58,7 @@
   }
   td.hora   { text-align: center; font-weight: bold; width: 115px; min-width: 115px; }
   td.cliente { font-weight: bold; cursor: pointer; }
-  td.cliente:hover { text-decoration: underline; opacity: 0.85; }
+  td.min:0, cliente:hover { text-decoration: underline; opacity: 0.85; }
   td.vence  { text-align: center; width: 115px; font-size: 0.88em; }
   td.flecha { text-align: center; width: 36px; font-size: 1.4em; }
 
@@ -708,17 +708,17 @@ const vencidas = [
   { hora:"6:45 AM",  min:6*60+45,  cliente:"Banpaís",            vence:"13/07/2026", turno:"madrugada" },
   { hora:"7:40 AM",  min:7*60+40,  cliente:"Banpaís",            vence:"13/07/2026", turno:"madrugada" },
   { hora:"3:20 PM",  min:15*60+20, cliente:"Fumiserv",           vence:"23/05/2026", turno:"tarde" },
-  { hora:"4:55 PM", cliente:"Sylvan Coffee Shop", vence:"20/05/2026" },
-  { hora:"5:45 PM", cliente:"Sylvan Coffee Shop", vence:"20/05/2026" },
-  { hora:"8:15 AM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
-  { hora:"9:30 AM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
-  { hora:"10:45 AM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
-  { hora:"11:10 AM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
-  { hora:"11:40 AM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
-  { hora:"12:20 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
-  { hora:"2:20 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
-  { hora:"3:40 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
-  { hora:"4:50 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" }
+  { hora:"4:55 PM", min:1015, cliente:"Sylvan Coffee Shop", vence:"20/05/2026" },
+  { hora:"5:45 PM", min:1065, cliente:"Sylvan Coffee Shop", vence:"20/05/2026" },
+  { hora:"8:15 AM", min:495, cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"9:30 AM", min:570, cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"10:45 AM", min:645, cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"11:10 AM", min:670, cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"11:40 AM", min:700, cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"12:20 PM", min:740, cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"2:20 PM", min:860, cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"3:40 PM", min:940, cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"4:50 PM", min:1010, cliente:"Junior H (Concierto)", vence:"20/05/2026" }
 ];
 
 // Render activas
@@ -877,7 +877,6 @@ setInterval(actualizar, 30000);
     </script>
     </body>
 </html>
-
 
 
 
