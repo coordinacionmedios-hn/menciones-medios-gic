@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horario de Menciones — Copán Stereo 96.3 FM</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #F5F0E8;
+    background-image:
+      radial-gradient(ellipse at 10% 90%, rgba(200,180,140,0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 10%, rgba(180,160,120,0.15) 0%, transparent 50%);
+    color: #222;
+    padding: 10px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  h1 {
+    text-align: center;
+    color: #2B4590;
+    font-size: 1.3em;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+  #reloj {
+    text-align: center;
+    color: #1a3a7a;
+    font-size: 1.2em;
+    margin-bottom: 18px;
+    font-weight: bold;
+    letter-spacing: 3px;
+  }
+  table {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto 24px auto;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  thead th {
+    background: #2B4590;
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 0.95em;
+    text-align: center;
+  }
+  td {
+    padding: 8px 14px;
+    font-size: 0.95em;
+    border-bottom: 1px solid #000;
+  }
+  td.hora   { text-align: center; font-weight: bold; width: 115px; min-width: 115px; }
+  td.cliente { font-weight: bold; cursor: pointer; }
+  td.cliente:hover { text-decoration: underline; opacity: 0.85; }
+  td.vence  { text-align: center; width: 115px; font-size: 0.88em; }
+  td.flecha { text-align: center; width: 36px; font-size: 1.4em; }
+
+  .madrugada { background: #A8CCFF; border-bottom: 1px solid #000; }
+  .manana    { background: #A8DCBA; border-bottom: 1px solid #000; }
+  .mediodia  { background: #FFE680; border-bottom: 1px solid #000; }
+  .tarde     { background: #D8B4F8; border-bottom: 1px solid #000; }
+  .atardecer { background: #A8DCBA; border-bottom: 1px solid #000; }
+  .lrdr-row  { background: #B8956A; border-bottom: 1px solid #000; }
+  .noche     { background: #FFB3C6; }
+
+  tr.activa td { filter: brightness(0.82); }
+  tr.activa td.flecha { color: #1a7a1a; font-weight: bold; }
+
+  .sec-title.sec-lrdr th {
+    background: #1a1a2e;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+  }
+  .sec-title th {
+    background: #555;
+    color: #fff;
+    padding: 8px 14px;
+    text-align: center;
+    font-size: 0.95em;
+  }
+  .vencida td { background: #DEDEDE; color: #888; }
+
+  .vence-fecha { color: #b00000; font-weight: bold; }
+  .vence-indef { color: #00CC44; font-weight: bold; text-transform: uppercase; text-shadow: 0 0 8px #fff, 0 0 3px #fff; letter-spacing: 0.5px; }
+
+  /* Leyenda */
+  .links-institucionales {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding: 28px 8px 28px 8px;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .links-institucionales a {
+    color: #2B4590;
+    font-weight: bold;
+    font-size: 0.95em;
+    text-decoration: none;
+    background: #f0f4ff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #2B4590;
+  }
+  .links-institucionales a:hover { background: #2B4590; color: #fff; }
+  .leyenda {
+    margin-top: 8px;
+    max-width: 620px;
+    margin: 0 auto 30px auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .leyenda-item { display: flex; align-items: center; gap: 6px; font-size: 0.82em; color: #444; }
+  .leyenda-color { width: 18px; height: 18px; border-radius: 3px; border: 1px solid #aaa; }
+
+
+  .header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 620px;
+    margin: 0 auto 6px auto;
+  }
+  .header-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 8px rgba(0,0,0,0.25));
+  }
+  .header-center { text-align: center; flex: 1; padding: 0 10px; }
+  .header-center h1 { margin-bottom: 2px; }
+  .header-location {
+    text-align: center;
+    color: #555;
+    font-size: 0.88em;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  /* MODAL */
+  #overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 100;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 16px;
+    overflow-y: auto;
+  }
+  #overlay.visible { display: flex; }
+  #modal {
+    background: #fff;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    min-height: auto;
+    margin: auto;
+    padding: 22px 24px 28px 24px;
+    position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  }
+  #modal h2 {
+    color: #2B4590;
+    font-size: 1.1em;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #2B4590;
+  }
+  #modal-text {
+    font-size: 0.88em;
+    line-height: 1.65;
+    color: #222;
+    white-space: pre-wrap;
+  }
+  #modal-close {
+    position: absolute;
+    top: 12px; right: 16px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #888;
+    background: none;
+    border: none;
+    line-height: 1;
+  }
+  #modal-close:hover { color: #333; }
+
+      .header-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 620px;
+        margin: 0 auto 10px auto;
+        background: rgba(255,255,255,0.45);
+        padding: 12px 18px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      }
+      .header-logo { width: 70px !important; height: 70px !important; object-fit: contain; }
+      .header-center { text-align: center; flex: 1; }
+      .header-center h1 { font-size: 1rem !important; color: #2B4590 !important; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px; }
+      #reloj { font-size: 1.3rem !important; color: #1a3a7a !important; font-weight: bold; letter-spacing: 1px; }
+
+      #widget-vivo {
+        width: 100%;
+        max-width: 620px;
+        margin: 0 auto 10px auto;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        border-left: 6px solid #1a7a1a;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        box-sizing: border-box;
+      }
+      .label-vivo { font-size: 0.75rem; color: #1a7a1a; font-weight: bold; margin-right: 12px; text-transform: uppercase; }
+      #song-title { font-size: 0.9rem; color: #333; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+    
+  .status-dot {
+    height: 8px;
+    width: 8px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+  }
+  .dot-local { background-color: #28a745; box-shadow: 0 0 5px #28a745; }
+  .dot-cloud { background-color: #007bff; box-shadow: 0 0 5px #007bff; }
+.amarillo { background-color: #FFFF00 !important; color: #000 !important; }
+.bg-azul { background-color: #0070C0 !important; color: #fff !important; }
+.bg-verde { background-color: #00B050 !important; color: #fff !important; }
+</style>
+</head>
+<body>
+<div class="header-box">
+  <img src="data:image/png;base64,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" class="header-logo" alt="Copán Stereo">
+  <div class="header-center">
+    <h1>Horario de Menciones</h1>
+    <div id="reloj">Cargando...</div>
+  </div>
+  <img src="data:image/png;base64,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" class="header-logo" alt="Grupo Ideas Copán">
+</div>
+
+
+<div id="widget-vivo">
+  <div class="label-vivo">🎵 EN VIVO:</div>
+  <div id="song-title">
+    <span id="dot" class="status-dot"></span>
+    <span id="song-display">Sincronizando...</span>
+  </div>
+</div>
+
+
+<table id="tabla-menciones">
+  <thead>
+    <tr>
+      <th>HORA</th>
+      <th>CLIENTE</th>
+      <th>VENCE</th>
+      <th>▶</th>
+    </tr>
+  </thead>
+  <tbody id="filas-activas"></tbody>
+  <tbody class="sec-title sec-lrdr"><tr><th colspan="4">MENCIONES — LA RUTA DEL ROCK</th></tr></tbody>
+  <tbody id="filas-lrdr"></tbody>
+  <tbody class="sec-title"><tr><th colspan="4">MENCIONES VENCIDAS</th></tr></tbody>
+  <tbody id="filas-vencidas"></tbody>
+</table>
+
+<div class="links-institucionales">
+  <a href="http://www.copanstereo.com" target="_blank">🌐 copanstereo.com</a>
+  <a href="http://www.gic.hn" target="_blank">🌐 gic.hn</a>
+</div>
+<div class="leyenda">
+  <div class="leyenda-item"><div class="leyenda-color" style="background:#A8CCFF"></div> Madrugada 4–8AM</div>
+  <div class="leyenda-item"><div class="leyenda-color" style="background:#A8DCBA"></div> Mañana 8–11AM</div>
+  <div class="leyenda-item"><div class="leyenda-color" style="background:#FFE680"></div> Mediodía 11AM–1PM</div>
+  <div class="leyenda-item"><div class="leyenda-color" style="background:#D8B4F8"></div> Tarde 1–4PM</div>
+  <div class="leyenda-item"><div class="leyenda-color" style="background:#A8DCBA"></div> Atardecer 4–6PM</div>
+  <div class="leyenda-item"><div class="leyenda-color" style="background:#FFB3C6"></div> Noche 6–9PM</div>
+  <div class="leyenda-item"><div class="leyenda-color" style="background:#B8956A"></div> La Ruta del Rock</div>
+</div>
+
+<!-- Modal -->
+<div id="overlay">
+  <div id="modal">
+    <button id="modal-close" onclick="cerrarModal()">✕</button>
+    <h2 id="modal-titulo"></h2>
+    <div id="modal-text"></div>
+  </div>
+</div>
+
+<script>
+const MENCIONES = {
+  "BAC": `MENCIÓN EN VIVO
+BAC — AHORRO PMA
+
+¡Honduras ahorra y celebra con BAC! Participa por 50 premios de 10 mil lempiras cada uno. Al abrir tu cuenta de ahorro BAC y por cada 500 lempiras de incremento en tu saldo, acumulas una oportunidad para ganar. ¡No esperes más! Abre tu cuenta hoy mismo, ahorra y gana con BAC. BAC, celebra y ahorra.`,
+  "El Gallo más Gallo": `Mención en Vivo
+El Gallo más Gallo — ¡Se Armó La Potra!
+
+¡Se Armó La Potra en El Gallo más Gallo con las mejores promociones! 
+Te esperamos en tu tienda de El Gallo más Gallo más cercana: Santa Rosa y La Entrada, Copán; Ocotepeque, Ocotepeque; Azacualpa, Quimistán y Santa Bárbara, Santa Bárbara; Gracias y Lepaera, Lempira.`,
+
+
+
+
+  "Aquaroni": `Mención en Vivo
+Repuestos Aquaroni
+
+VERSIÓN 1:
+En repuestos acquaroni hemos armado la mejor selección de todas , buscando alrededor del planeta  a los mejores repuestos para tu auto de marcas reconocidas y con total garantia que solo repuestos acquaroni te puede dar, cuando necesites repuestos solo busca la señal y los encontraras, Repuestos acquaroni. La señal de los repuestos. De la tierra en la que nació este apasionante deporte llega a honduras el lubricante A. Z. TEC con el respaldo de Repuestos Aquaroni. 
+
+VERSIÓN 2:
+¡La señal que te guía a los repuestos que tu auto necesita está en Santa Rosa de Copán! Repuestos Aquaroni. Visítanos en Barrio Miraflores frente a las bodegas de distribuidora la occidental.
+Tenemos todo en motor, suspensión, dirección, frenos, sistema eléctrico, coolant y aceites. Pide tus repuestos al 3151-8028 y recibe a domicilio sin costo adicional.
+Te esperamos en Repuestos Aquaroni, la señal de los repuestos.`,
+
+  "Lagos Joyeros": `Mención en Vivo
+Lagos Joyeros — Especial de Junio
+
+¿Buscás ese detalle que hable por vos? En Lagos Joyeros, creemos que los momentos más importantes merecen brillar para siempre. 
+
+Y este mes de junio, ¡queremos que brilles más que nunca! Visítanos en nuestra tienda en Mall Uniplaza, Santa Rosa de Copán, y sorprendete con nuestra joyería fina en oro para damas, caballeros y hasta para los más pequeñitos de la casa.
+
+¡Atención a esto! Durante todo el mes, aprovechá hasta un 40% DE DESCUENTO en toda la tienda. Sí, escuchaste bien, ¡40% de descuento para que te llevés esa prenda que tanto has soñado!
+
+¿No estás en Santa Rosa? ¡No hay problema! Durante todo junio, tenemos ENVÍOS GRATIS a todo el país. Comprá desde la comodidad de tu casa y nosotros te lo hacemos llegar sin costo adicional.
+
+Escribinos ya al WhatsApp: 9662-4951 o seguinos en Instagram como @lagos_joyeros_hn.
+
+Lagos Joyeros... ¡Donde cada momento brilla!`,
+  "Asados La Entrada": `Mención en Vivo
+Asados La Entrada
+
+Cuando el hambre aprieta, ¡ya sabes dónde ir!
+En Asados La Entrada, donde siempre se come bien... te esperan deliciosas carnes asadas, con ese sabor único que solo aquí encuentras.
+Y no te puedes perder nuestras exquisitas sopas de gallina y mariscos, perfectas para cualquier momento.
+
+Visítanos en Barrio Miraflores, frente a Texaco La Reyna.
+Llámanos al 9269-7003.
+
+Asados La Entrada... donde siempre se come bien.`,
+
+  "Banpaís": `Mención en Vivo
+Banpaís — Remesas y Agentes
+
+VERSIÓN REMESAS:
+
+Me llega tu esfuerzo. Cobra tu remesa en Banpaís y siente el apoyo que viene desde lejos, es fácil, ágil y seguro.
+
+Me llega tu amor desde lejos. En Banpaís podés cobrar tus remesas de forma segura a través de agencias, Agentes Banpaís, directo a tu cuenta o escribiendo o llamando al 2545-1212.
+
+Me llega que sea fácil. Cobra tu remesa en Banpaís de forma fácil y ágil a través de agencias, Agentes Banpaís, directo a tu cuenta o escribiendo o llamando al 2545-1212.
+
+VERSIÓN AGENTES:
+
+A la mano tengo todo en un solo lugar. Haz tus gestiones con confianza en Agentes Banpaís, cobra tus remesas, retira efectivo, realiza depósitos y paga servicios.
+
+A la mano puedo cobrar mi remesa y comprar el pan. Haz tus gestiones de forma fácil y ágil en Agentes Banpaís, encuentra el más cercano.
+
+A la mano puedo realizar mi depósito y comprar las medicinas. Haz tus gestiones de forma fácil y ágil en Agentes Banpaís, encuentra el más cercano.`,
+
+  "BP Agentes": `Mención en Vivo
+Banco del País — BP Agentes
+
+A la mano tengo todo en un solo lugar. Haz tus gestiones con confianza en Agentes Banpaís, cobra tus remesas, retira efectivo, realiza depósitos y paga servicios.
+
+A la mano puedo cobrar mi remesa y comprar el pan. Haz tus gestiones de forma fácil y ágil en Agentes Banpaís, encuentra el más cercano.
+
+A la mano puedo realizar mi depósito y comprar las medicinas. Haz tus gestiones de forma fácil y ágil en Agentes Banpaís, encuentra el más cercano.`,
+
+  "BP Remesas": `Mención en Vivo
+Banco del País — BP Remesas
+
+Me llega tu esfuerzo. Cobra tu remesa en Banpaís y siente el apoyo que viene desde lejos, es fácil, ágil y seguro.
+
+Me llega tu amor desde lejos. En Banpaís podés cobrar tus remesas de forma segura a través de agencias, Agentes Banpaís, directo a tu cuenta o escribiendo o llamando al 2545-1212.
+
+Me llega que sea fácil. Cobra tu remesa en Banpaís de forma fácil y ágil a través de agencias, Agentes Banpaís, directo a tu cuenta o escribiendo o llamando al 2545-1212.`,
+
+  "Espresso Americano": `Mención en Vivo — Sabores Mundialistas | Minions
+
+SEMANA 1 (USA - Del 4 al 11 de junio):
+"¡Sabores Mundialistas: prueba esta semana USA! Tres colores, una sola pasión: el fútbol. ¡Pídela en tu coffee shop favorito! Espresso Americano."
+
+---
+
+SEMANA 2 (MÉXICO - Del 12 al 18 de junio):
+"¡Arriba, arriba! México ya está en Espresso Americano. Los Sabores Mundialistas: verde, fresco y con toda la fiesta del fútbol. ¡Pídela en tu coffee shop favorito! Espresso Americano."
+
+---
+
+SEMANA 3 (ARGENTINA - Del 19 al 25 de junio):
+"¡Sabores Mundialistas: prueba esta semana Argentina! Fría, azul y con toda la garra del futbol. ¡Pídela en tu coffee shop favorito! Espresso Americano."
+
+---
+
+SEMANA 4 (ESPAÑA - Del 26 de junio al 02 de julio):
+"¡Sabores Mundialistas: prueba esta semana España! Rojo, intenso y con toda la pasión de la cancha. ¡Pídela en tu coffee shop favorito! Espresso Americano."
+
+---
+
+SEMANA 5 (BRASIL - Del 03 al 09 de julio):
+"¡Sabores Mundialistas: prueba esta semana Brasil! Verde, amarilla y con toda la magia del fútbol brasileño. ¡Pídela en tu coffee shop favorito! Espresso Americano."
+
+---
+
+SEMANA 6 (PORTUGAL - Del 10 al 19 de julio):
+"¡Clase mundial en cada vaso! Portugal, el Sabor Mundialista que juega en otra liga. Rojo y verde, puro fútbol. ¡Pídela en tu coffee shop favorito! Espresso Americano."
+---
+
+---
+
+**************************************************
+   NUEVAS MENCIONES: MINIONS Y MONSTERS
+**************************************************
+
+Mención 1 – Versión general: 3 sabores
+¡Descubre algo monstruosamente irresistible! Espresso Americano se une a Minions & Monsters, solo en cines, para traerte tres sabores únicos: Piña Papoy, Monster Pitaya y Goomi Matcha. Encuéntralos en tu Coffee Shop favorito o en la App Espresso Rewards.
+Espresso Americano... la pasión del café.
+
+---
+
+Mención 2 – Monster Pitaya
+Hay sabores que simplemente te sorprenden. Espresso Americano se une a Minions & Monsters, solo en cines, para traerte Monster Pitaya. Vibrante y salvaje desde el primer sorbo. Encuéntrala en tu Coffee Shop favorito o en la App Espresso Rewards.
+Espresso Americano... la pasión del café.
+
+---
+
+Mención 3 – Goomi Matcha
+Para quienes siempre buscan algo diferente. Espresso Americano se une a Minions & Monsters, solo en cines, para traerte Goomi Matcha, verde e intenso como nunca lo has probado. Encuéntralo en tu Coffee Shop favorito o en la App Espresso Rewards.
+Espresso Americano... la pasión del café.
+
+---
+
+Mención 4 – Piña Papoy
+¿Antojo de algo refrescante e inesperado? Espresso Americano se une a Minions & Monsters, solo en cines, para traerte Piña Papoy. Intensa y lista para salirse del guion. Encuéntrala en tu Coffee Shop favorito o en la App Espresso Rewards.
+Espresso Americano... la pasión del café.
+`,
+
+  "Ferretería El Baratillo": `Mención en Vivo
+Ferretería El Baratillo
+
+Ferretería El Baratillo está en busca de personal para el área de bodega.
+
+Si estás interesado, abocate a la sucursal de Ferretería El Baratillo aquí en la ciudad de Santa Rosa de Copán.
+
+¡Forma parte de nuestro gran equipo, te esperamos!`,
+
+  "Fumiserv": `Mención en Vivo
+FumiServ — Copán Stereo 96.3 FM
+
+¿Cansado de las plagas en tu hogar o negocio? ¡No pongas en riesgo tu salud!
+
+En FumiServ tenemos la solución efectiva contra cucarachas, ratones, termitas y jatez. Somos expertos en control de plagas, brindando un servicio profesional, seguro y garantizado.
+
+Visítanos en Colonia Osorio, en Santa Rosa de Copán.
+Llámanos al 9226-3706.
+
+FumiServ… solucionamos problemas de plagas. ¡Contáctanos hoy!`,
+
+  "Jireth": `Mención en Vivo
+Jireth El Flow Patrocinio
+
+JIRETH
+
+El FLOW llega a ustedes gracias a Jireth Delicias Alimentarias.
+
+Con más de 20 años de experiencia, Jireth es tu mejor opción para cualquier ocasión. Son especialistas en pizzas y en crear los mejores pasteles temáticos para tus eventos especiales. ¿Buscas algo diferente? Tienen gastronomía única para cada temporada, opciones saludables con sus ensaladas fit, y la mejor variedad de postres y cafés que hacen que cada momento sea verdaderamente especial.
+
+Visítalos en Santa Rosa de Copán: ubicados en Barrio Santa Teresa y en Colonia Miraflores. Puedes pedir a domicilio al 2662-0171 o al WhatsApp 9701-0109.
+
+Y si estás en Gracias, Lempira, haz tus pedidos al WhatsApp 9769-3035.
+
+Jireth Delicias Alimentarias, tradición y sabor en cada bocado.
+
+¡ATENCIÓN GRACIAS, LEMPIRA!
+YA PUEDEN VISITARNOS EN NUESTRO NUEVO HORARIO:
+DE LUNES A DOMINGO, DE 8:00 AM A 7:00 PM.
+¡LOS ESPERAMOS!
+
+---Mención en vivo (Versión corta / Rápida)
+
+El FLOW es presentado por Jireth Delicias Alimentarias, con más de 20 años siendo especialistas en pizzas, pasteles temáticos y gastronomía de temporada. Disfruta de sus ensaladas fit, postres y cafés en sus ubicaciones de Santa Rosa de Copán (Barrio Santa Teresa y Colonia Miraflores), pidiendo al 2662-0171 o al WhatsApp 9701-0109. También presentes en Gracias, Lempira al WhatsApp 9769-3035. Jireth Delicias Alimentarias: haciendo cada momento especial.`,
+
+  "La Casa de Doña Olimpia": `Mención en Vivo
+La Casa de Doña Olimpia
+
+¿Buscas el mejor sabor tradicional? ¡Ven a La Casa de Doña Olimpia!
+
+Especialistas en delicioso cerdo horneado, desde 1947 conquistando paladares.
+
+Disfruta de nuestras opciones:
+Cerdo completo, medio cerdo, pierna, costilla... y también plato personal.
+
+Estamos ubicados en Villa Belén, carretera CA-11, frente a Autolote Landaverde.
+Haz tu pedido al 9519-5474.
+
+La Casa de Doña Olimpia... ¡Sabor que se comparte en familia!`,
+
+  "La Rosa": `Mención en Vivo
+La Rosa — Cero Drama
+
+MENCIÓN 1:
+Descubre lo fácil que es disfrutar de unas baleadas perfectas. Con harina preparada para baleadas La Rosa, solo agrega agua, amasa y listo — el secreto de las baleadas cero drama.
+
+MENCIÓN 2:
+¿Querés baleadas sin complicaciones? Usá harina preparada para baleadas La Rosa. Solo agregá agua, amasá y disfrutá el sabor de siempre. Fácil y cero drama.
+
+MENCIÓN 3:
+Si querés preparar baleadas sin complicaciones, La Rosa es tu respuesta. Solo agua, masa y listo.
+
+La Rosa — Cero Drama.`,
+
+  "Laboratorio Bueso Arias": `MENCIÓN EN VIVO
+Laboratorio Bueso Arias
+
+Laboratorio Bueso Arias, 75 años al servicio de las familias hondureñas, ¡Ahora en Siguatepeque!
+
+Encuéntranos en Centro Médico Los Ángeles, Avenida Gabriela Núñez, atendiendo desde las 6:30 AM.
+
+Laboratorio Bueso Arias — Sirviendo con Calidez, Trabajando con Calidad.`,
+
+  "Sylvan Coffee Shop": `MENCIÓN EN VIVO
+Sylvan Coffee Shop
+
+En el corazón de Siguatepeque, Honduras encuentras: SYLVAN COFFEE SHOP.
+
+Visítanos esquina opuesta al parque central y vive la experiencia gastronómica:
+• Alitas • Nachos • Hamburguesas • Paninis • Papas locas
+• Desayunos • Crepas • Churros • Postres • Cafés • Cócteles y licuados
+
+Abiertos de LUNES A DOMINGO.
+Búscanos en Facebook e Instagram como: sylvancoffeeshop`,
+
+  "Junior H (Concierto)": `Mención en Vivo
+Junior H — Concierto en Honduras
+
+¡Sad Boys, esto es para ustedes!
+
+Honduras está a punto de vivir una noche que va a doler bonito — Junior H llega al Estadio Chochi Sosa de Tegucigalpa este miércoles 20 de mayo a las 9:00 de la noche y la raza ya está entrando al movimiento.
+
+No es un concierto cualquiera — es la noche que todos van a estar contando después.
+
+¿Querés ganarte tus accesos? ¡Estate pendiente a la programación de Copán Stereo 96.3 FM y Ritmo 106.3 FM! Vamos a sortear boletos para las zonas de Santa Rosa de Copán y Ocotepeque — no te podés perder esta oportunidad.
+
+Los que conocen las rolas de verdad saben que esta noche no se la pueden perder. Después de esto, ya no hay vuelta atrás.
+
+Presentado por Conciertos BAC | Produce CR Entertainment y Conciertos Honduras`,
+
+  "Sky Tours": `Mención en Vivo
+Sky Tours [Skai Turs]… el tiempo es tu aliado.
+
+Descubre Centroamérica y el mundo… sin prisa.
+
+Creamos experiencias cómodas y relajadas para quienes realmente quieren disfrutar el viaje.
+
+Adultos mayores, grupos corporativos, universidades y senior trips [sínior trips]… todos viajan mejor con Sky Tours [Skai Turs].
+
+Porque viajar no es correr… es vivir cada momento.
+
+Sky Tours [Skai Turs].
+Tu aventura… sin prisa.
+
+Contáctanos vía WhatsApp al 9594-7459.`,
+  "COMPU+ DATOS": `Mención en Vivo
+Compu+ Datos
+
+¡En COMPU MÁS vivimos la emoción del fútbol mundial contigo! 
+Disfruta cada partido en vivo y en alta definición por FOX, Canal 190, exclusivo de nuestra TV Digital. Vive cada gol, cada jugada y cada emoción con la mejor señal y cobertura para compartir en familia. 
+
+No te pierdas ni un solo minuto de la pasión que mueve al mundo. 
+
+¡COMPU MÁS, conectándote con la emoción del fútbol mundial!
+¡FOX, canal 190, exclusivo en TV digital!
+¡La pasión del mundial, ahora en tu pantalla!`,
+  "Banco Ficohsa": `Mención en Vivo
+Banco Ficohsa — Ahorrar es Poder
+
+Cada meta comienza con una buena decisión. Deposita o incrementa tus ahorros con L1,000 o más en tu cuenta de ahorro Ficohsa y participa por L1 millón de lempiras porque Ahorrar es Poder. ¡Abre tu cuenta ya! Banco Ficohsa`,
+  "Banco Cuscatlán": `Mención en Vivo
+Banco Cuscatlán — Sueña y Ahorra
+
+MENCIÓN 1:
+Si meter un gol emociona, imagínate incrementar tus ahorros y ganar. Con Sueña y Ahorra de Banco Cuscatlán, por cada L1,000 recibes un boleto electrónico para ganar uno de los 25 Smart TVs de 58 pulgadas. Banco Cuscatlán, tu dinero juega por ti.
+
+MENCIÓN 2:
+Abre tu cuenta o incrementa tus ahorros en Banco Cuscatlán. Con Sueña y Ahorra, por cada L1,000 recibes un boleto electrónico. Entre más ahorras, más oportunidades tienes de ganar uno de los 25 Smart TVs de 58 pulgadas. Banco Cuscatlán, tu dinero juega por ti.`,
+  "UNITEC": `Mención en Vivo
+UNITEC — Medicina y Diseño de Modas
+
+MENCIÓN MEDICINA:
+Cuando transmitís calma en momentos de emergencia, destacás como un gran médico... Matricúlate en UNITEC Tegucigalpa y sé el profesional que la salud necesita.
+
+MENCIÓN DISEÑO DE MODAS:
+Cuando creás con propósito, marcás vidas y demostrás el profesional que sos... Estudiá Diseño de Moda en UNITEC Tegucigalpa y sé el profesional que el mundo necesita.`,
+
+  "Subway": `Mención en Vivo
+Subway Series
+
+MENCIÓN 1:
+Si eres de los que siempre buscan algo diferente... Subway Series es para ti. Ahora con nuevas combinaciones favoritas que te van a hacer volver una y otra vez. Más sabores, más opciones y más razones para elegir Subway. Subway. Come bien.
+
+MENCIÓN 2:
+¿Te cuesta elegir solo un sub? Entonces prepárate... porque Subway Series ahora tiene nuevas combinaciones que están demasiado buenas. Pollo, carne, pavo... hay un sabor para cada antojo. Subway Series, siempre hay espacio para un nuevo favorito. Subway. Come bien.`,
+
+  "COFISA": `🎙 Mención mundial #1, del 14 al 20 de junio:
+¿Ya estás listo para vivir el Mundial?
+Solicita tu préstamo en COFISA y participa para ganar uno de los 10 Smart TV de 40 pulgadas que se estarán rifando cada sábado durante el mundial.
+Promoción válida desde el 15 de junio al 17 de julio a nivel nacional.
+Próximo sorteo el sábado 20 de junio.
+COFISA, un amigo que sí responde. Aplican restricciones.
+
+🎙 Mención mundial #2, del 22 al 27 de junio:
+¿Ya estás listo para vivir el Mundial?
+Solicita tu préstamo en COFISA y participa para ganar uno de los 10 Smart TV de 40 pulgadas que se estarán rifando cada sábado durante el mundial.
+Promoción válida desde el 15 de junio al 17 de julio a nivel nacional.
+Próximo sorteo el sábado 27 de junio.
+COFISA, un amigo que sí responde. Aplican restricciones.
+
+🎙 Mención mundial #3, del 29 de junio al 4 de julio:
+¿Ya estás listo para vivir el Mundial?
+Solicita tu préstamo en COFISA y participa para ganar uno de los 10 Smart TV de 40 pulgadas que se estarán rifando cada sábado durante el mundial.
+Promoción válida desde el 15 de junio al 17 de julio a nivel nacional.
+Próximo sorteo el sábado 4 de julio.
+COFISA, un amigo que sí responde. Aplican restricciones.
+
+🎙 Mención mundial #4, del 6 al 11 de julio:
+¿Ya estás listo para vivir el Mundial?
+Solicita tu préstamo en COFISA y participa para ganar uno de los 10 Smart TV de 40 pulgadas que se estarán rifando cada sábado durante el mundial.
+Promoción válida desde el 15 de junio al 17 de julio a nivel nacional.
+Próximo sorteo el sábado 11 de julio.
+COFISA, un amigo que sí responde. Aplican restricciones.
+
+🎙 Mención mundial #5, del 13 al 17 de julio:
+¿Ya estás listo para vivir el Mundial?
+Solicita tu préstamo en COFISA y participa para ganar uno de los 10 Smart TV de 40 pulgadas que se estarán rifando cada sábado durante el mundial.
+Promoción válida desde el 15 de junio al 17 de julio a nivel nacional.
+Último sorteo el sábado 18 de julio.
+COFISA, un amigo que sí responde. Aplican restricciones.`
+};
+const activas = [
+{ hora:"7:05 AM",  min:7*60+5,   cliente:"Espresso Americano", vence:"Indefinido",  turno:"madrugada" },
+  { hora:"8:15 AM", min:495, cliente:"BAC", vence:"06/08/2026", turno:"manana" },
+{ hora:"8:20 AM",  min:8*60+20,  cliente:"Sky Tours",          vence:"15/11/2026", turno:"manana" },
+{ hora:"8:30 AM",  min:8*60+30,  cliente:"COFISA",           vence:"Indefinido",  turno:"manana" },
+{ hora:"8:45 AM",  min:8*60+45,  cliente:"BP Agentes",         vence:"13/07/2026", turno:"manana" },
+{ hora:"8:50 AM",  min:8*60+50,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },
+{ hora:"9:10 AM",  min:9*60+10,  cliente:"Subway",             vence:"Indefinido",  turno:"manana" },
+{ hora: "9:15 AM",  min: 555,      cliente: "El Gallo más Gallo", vence: "31/07/2026", turno: "manana", bg: "bg-manana" },
+{ hora:"9:20 AM",  min:9*60+20,  cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"manana" },
+{ hora:"9:30 AM",  min:9*60+30,  cliente:"Aquaroni",           vence:"13/08/2026", turno:"manana" },
+{ hora:"9:45 AM",  min:9*60+45,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },
+{ hora:"10:15 AM", min:10*60+15, cliente:"Subway",             vence:"Indefinido",  turno:"manana" },
+{ hora:"11:30 AM", min:11*60+30, cliente:"Aquaroni",           vence:"13/08/2026", turno:"mediodia", bg:"amarillo" },
+{ hora:"12:05 PM", min:12*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
+  { hora:"12:15 PM", min:735, cliente:"BAC", vence:"06/08/2026", turno:"mediodia", bg:"amarillo" },
+{ hora:"12:25 PM", min:12*60+25, cliente:"COFISA",           vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
+{ hora:"12:40 PM", min:12*60+40, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
+{ hora:"1:05 PM",  min:13*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+{ hora:"1:25 PM",  min:13*60+25, cliente:"Subway",             vence:"Indefinido",  turno:"tarde" },
+{ hora:"1:40 PM",  min:13*60+40, cliente:"BP Remesas",         vence:"13/07/2026", turno:"tarde" },
+{ hora:"2:05 PM",  min:14*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+{ hora:"2:15 PM",  min:14*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"tarde" },
+{ hora:"2:45 PM",  min:14*60+45, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"tarde" },
+{ hora:"3:05 PM",  min:15*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+{ hora:"3:10 PM",  min:15*60+10, cliente:"COFISA",           vence:"Indefinido",  turno:"tarde" },
+  { hora:"3:15 PM", min:915, cliente:"BAC", vence:"06/08/2026", turno:"tarde" },
+{ hora:"3:20 PM",  min:15*60+20, cliente:"Sky Tours",          vence:"15/11/2026", turno:"tarde" },
+{ hora:"3:35 PM",  min:15*60+35, cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+{ hora:"5:15 PM",  min:17*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"atardecer" },
+{ hora:"5:45 PM",  min:17*60+45, cliente:"Espresso Americano", vence:"Indefinido",  turno:"atardecer" },
+  { hora:"6:25 PM", min:1105, cliente:"BAC", vence:"06/08/2026", turno:"atardecer" },
+];
+
+const lrdr = [
+  
+];
+
+const vencidas = [
+  { hora:"7:15 AM",   min:435,  cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"madrugada" },
+  { hora:"8:10 AM",  min:490,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"manana" },
+  { hora:"9:50 AM",  min:590,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"manana" },
+  { hora:"10:05 AM", min:605,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"manana" },
+  { hora:"10:20 AM", min:620,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"manana" },
+  { hora:"10:25 AM",  min:625,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"manana" },
+  { hora:"10:45 AM", min:645,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"manana" },
+  { hora:"11:10 AM", min:670,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"mediodia", bg:"amarillo" },
+  { hora:"11:20 AM", min:680,  cliente:"COMPU+ DATOS",    vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
+  { hora:"11:40 AM",  min:700,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
+  { hora:"11:50 AM", min:710,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"mediodia", bg:"amarillo" },
+  { hora:"12:20 PM",  min:740,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
+  { hora:"12:45 PM", min:765,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"mediodia", bg:"amarillo" },
+  { hora:"12:50 PM", min:770,   cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"mediodia", bg:"amarillo" },
+  { hora:"1:45 PM",  min:13*60+45, cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"tarde" },
+  { hora:"1:50 PM",  min:830,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"tarde" },
+  { hora:"2:30 PM",  min:14*60+30, cliente:"Lagos Joyeros",      vence:"30/06/2026", turno:"tarde" },
+  { hora:"2:35 PM",  min:875,  cliente:"UNITEC",             vence:"30/06/2026",  turno:"tarde" },
+  { hora:"2:50 PM",  min:890,   cliente:"Banco Cuscatlán",    vence:"30/06/2026", turno:"tarde" },
+  { hora:"3:45 PM",  min:945,  cliente:"Banco Ficohsa",      vence:"30/06/2026",  turno:"tarde" },
+  { hora:"4:10 PM",  min:16*60+10, cliente:"Laboratorio Bueso Arias", vence:"20/06/2026" },
+  { hora:"5:20 PM",  min:17*60+20, cliente:"Laboratorio Bueso Arias", vence:"20/06/2026" },
+  { hora:"9:55 AM",  min:9*60+55,  cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"manana" },
+  { hora:"2:25 PM",  min:14*60+25, cliente:"Asados La Entrada",  vence:"13/06/2026", turno:"tarde" },
+  { hora:"6:45 AM",  min:6*60+45,  cliente:"Banpaís",            vence:"13/07/2026", turno:"madrugada" },
+  { hora:"7:40 AM",  min:7*60+40,  cliente:"Banpaís",            vence:"13/07/2026", turno:"madrugada" },
+  { hora:"3:20 PM",  min:15*60+20, cliente:"Fumiserv",           vence:"23/05/2026", turno:"tarde" },
+  { hora:"4:55 PM", cliente:"Sylvan Coffee Shop", vence:"20/05/2026" },
+  { hora:"5:45 PM", cliente:"Sylvan Coffee Shop", vence:"20/05/2026" },
+  { hora:"8:15 AM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"9:30 AM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"10:45 AM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"11:10 AM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"11:40 AM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"12:20 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"2:20 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"3:40 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" },
+  { hora:"4:50 PM", cliente:"Junior H (Concierto)", vence:"20/05/2026" }
+];
+
+// Render activas
+const tbody = document.getElementById("filas-activas");
+activas.forEach((m, idx) => {
+  const tr = document.createElement("tr");
+  tr.id = "fila-" + idx;
+  tr.className = m.turno + (m.bg ? " " + m.bg : "");
+
+  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+  tdC.title = "Clic para ver la mención completa";
+  tdC.onclick = () => abrirModal(m.cliente);
+
+  const tdV = document.createElement("td");
+  tdV.className = "vence " + (m.vence==="Indefinido" ? "vence-indef" : "vence-fecha");
+  tdV.textContent = m.vence;
+
+  const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-"+idx;
+
+  tr.append(tdH, tdC, tdV, tdF);
+  tbody.appendChild(tr);
+});
+
+// Render vencidas
+const tbodyV = document.getElementById("filas-vencidas");
+vencidas.forEach(m => {
+  const tr = document.createElement("tr"); tr.className="vencida";
+  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+  const tdV = document.createElement("td"); tdV.className="vence"; tdV.textContent=m.vence;
+  const tdF = document.createElement("td"); tdF.className="flecha";
+  tr.append(tdH, tdC, tdV, tdF);
+  tbodyV.appendChild(tr);
+});
+
+// Render LRDR
+const tbodyL = document.getElementById("filas-lrdr");
+lrdr.forEach((m, idx) => {
+  const tr = document.createElement("tr");
+  tr.id = "fila-lrdr-" + idx;
+  tr.className = "lrdr-row";
+  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+  tdC.onclick = () => abrirModal(m.cliente);
+  tdC.title = "Clic para ver la mención completa";
+  const tdV = document.createElement("td"); 
+  tdV.className="vence " + (m.vence==="Indefinido" ? "vence-indef" : "vence-fecha");
+  tdV.textContent=m.vence;
+  const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-lrdr-"+idx;
+  tr.append(tdH, tdC, tdV, tdF);
+  tbodyL.appendChild(tr);
+});
+
+// Modal
+function abrirModal(cliente) {
+  const texto = MENCIONES[cliente] || "Mención no disponible.";
+  document.getElementById("modal-titulo").textContent = "📢 " + cliente;
+  document.getElementById("modal-text").textContent = texto;
+  document.getElementById("overlay").classList.add("visible");
+}
+function cerrarModal() {
+  document.getElementById("overlay").classList.remove("visible");
+}
+document.getElementById("overlay").addEventListener("click", function(e) {
+  if (e.target === this) cerrarModal();
+});
+document.addEventListener("keydown", e => { if(e.key==="Escape") cerrarModal(); });
+
+// Reloj y flecha
+function actualizar() {
+  const now = new Date();
+  const h = now.getHours(), m = now.getMinutes();
+  const total = h*60+m;
+  const ampm = h>=12?"PM":"AM", h12=h%12||12, mm=String(m).padStart(2,"0");
+  document.getElementById("reloj").textContent = `${h12}:${mm} ${ampm}`;
+
+  let activaIdx = -1;
+  for(let i=0; i<activas.length; i++) { if(total>=activas[i].min) activaIdx=i; }
+
+  activas.forEach((_,i) => {
+    document.getElementById("fila-"+i).classList.remove("activa");
+    document.getElementById("flecha-"+i).textContent="";
+  });
+  if(activaIdx>=0) {
+    const tr = document.getElementById("fila-"+activaIdx);
+    tr.classList.add("activa");
+    document.getElementById("flecha-"+activaIdx).textContent="👈🏻";
+    // tr.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+
+  // Flecha LRDR
+  let lrdrIdx = -1;
+  for(let i=0; i<lrdr.length; i++) { if(total>=lrdr[i].min) lrdrIdx=i; }
+  lrdr.forEach((_,i) => {
+    const el = document.getElementById("flecha-lrdr-"+i);
+    const tr = document.getElementById("fila-lrdr-"+i);
+    if(el) el.textContent="";
+    if(tr) tr.classList.remove("activa");
+  });
+  if(lrdrIdx>=0) {
+    const tr = document.getElementById("fila-lrdr-"+lrdrIdx);
+    const el = document.getElementById("flecha-lrdr-"+lrdrIdx);
+    if(tr) tr.classList.add("activa");
+    if(el) el.textContent="👈🏻";
+  }
+}
+actualizar();
+setInterval(actualizar, 30000);
+</script>
+
+    <script>
+    
+    
+    async function getSong() {
+      const display = document.getElementById('song-display');
+      const dot = document.getElementById('dot');
+      let found = false;
+      try {
+        const r = await fetch('https://ngrokhn.ngrok.pro/?action=playbackinfo', {
+          signal: AbortSignal.timeout(4000),
+          headers: { 'ngrok-skip-browser-warning': '1' }
+        });
+        const t = await r.text();
+        const xml = new DOMParser().parseFromString(t, "text/xml");
+        const trk = xml.querySelector('CurrentTrack TRACK');
+        if(trk) {
+          const a = (trk.getAttribute('ARTIST') || '').trim();
+          const title = (trk.getAttribute('TITLE') || '').trim();
+          const cast = (trk.getAttribute('CASTTITLE') || '').trim();
+          let song = '';
+          if (a && title) song = a + ' - ' + title;
+          else if (title) song = title;
+          else if (cast) song = cast;
+          else {
+            // Leer cualquier atributo disponible
+            const attrs = trk.attributes;
+            for (let i = 0; i < attrs.length; i++) {
+              if (attrs[i].value.trim()) { song = attrs[i].value.trim(); break; }
+            }
+          }
+          if (song) {
+            display.textContent = song.toUpperCase();
+            dot.className = 'status-dot dot-local';
+            found = true;
+          }
+        }
+      } catch(e) {}
+      if(!found) {
+        display.textContent = 'Sincronizando...';
+        dot.className = 'status-dot';
+      }
+    }
+    getSong();
+    setInterval(getSong, 5000);
+    </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
