@@ -307,6 +307,10 @@
 
 <script>
 const MENCIONES = {
+  "BAC": `MENCIÓN EN VIVO
+BAC — AHORRO PMA
+
+¡Honduras ahorra y celebra con BAC! Participa por 50 premios de 10 mil lempiras cada uno. Al abrir tu cuenta de ahorro BAC y por cada 500 lempiras de incremento en tu saldo, acumulas una oportunidad para ganar. ¡No esperes más! Abre tu cuenta hoy mismo, ahorra y gana con BAC. BAC, celebra y ahorra.`,
   "El Gallo más Gallo": `Mención en Vivo
 El Gallo más Gallo — ¡Se Armó La Potra!
 
@@ -652,33 +656,43 @@ Promoción válida desde el 15 de junio al 17 de julio a nivel nacional.
 COFISA, un amigo que sí responde. Aplican restricciones.`
 };
 const activas = [
-  { hora:"7:05 AM",  min:7*60+5,   cliente:"Espresso Americano", vence:"Indefinido",  turno:"madrugada" },
-  { hora:"8:20 AM",  min:8*60+20,  cliente:"Sky Tours",          vence:"15/11/2026", turno:"manana" },
-  { hora:"8:30 AM",  min:8*60+30,  cliente:"COFISA",           vence:"Indefinido",  turno:"manana" },
-  { hora:"8:45 AM",  min:8*60+45,  cliente:"BP Agentes",         vence:"13/07/2026", turno:"manana" },
-  { hora:"8:50 AM",  min:8*60+50,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },
-  { hora:"9:10 AM",  min:9*60+10,  cliente:"Subway",             vence:"Indefinido",  turno:"manana" },
-  { hora: "9:15 AM",  min: 555,      cliente: "El Gallo más Gallo", vence: "31/07/2026", turno: "manana", bg: "bg-manana" },
-  { hora:"9:20 AM",  min:9*60+20,  cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"manana" },
-  { hora:"9:30 AM",  min:9*60+30,  cliente:"Aquaroni",           vence:"13/08/2026", turno:"manana" },
-  { hora:"9:45 AM",  min:9*60+45,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },
-  { hora:"10:15 AM", min:10*60+15, cliente:"Subway",             vence:"Indefinido",  turno:"manana" },
-  { hora:"11:30 AM", min:11*60+30, cliente:"Aquaroni",           vence:"13/08/2026", turno:"mediodia", bg:"amarillo" },
-  { hora:"12:05 PM", min:12*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
-  { hora:"12:25 PM", min:12*60+25, cliente:"COFISA",           vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
-  { hora:"12:40 PM", min:12*60+40, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
-  { hora:"1:05 PM",  min:13*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
-  { hora:"1:25 PM",  min:13*60+25, cliente:"Subway",             vence:"Indefinido",  turno:"tarde" },
-  { hora:"1:40 PM",  min:13*60+40, cliente:"BP Remesas",         vence:"13/07/2026", turno:"tarde" },
-  { hora:"2:05 PM",  min:14*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
-  { hora:"2:15 PM",  min:14*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"tarde" },
-  { hora:"2:45 PM",  min:14*60+45, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"tarde" },
-  { hora:"3:05 PM",  min:15*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
-  { hora:"3:10 PM",  min:15*60+10, cliente:"COFISA",           vence:"Indefinido",  turno:"tarde" },
-  { hora:"3:20 PM",  min:15*60+20, cliente:"Sky Tours",          vence:"15/11/2026", turno:"tarde" },
-  { hora:"3:35 PM",  min:15*60+35, cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
-  { hora:"5:15 PM",  min:17*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"atardecer" },
-  { hora:"5:45 PM",  min:17*60+45, cliente:"Espresso Americano", vence:"Indefinido",  turno:"atardecer" }
+{ hora:"7:05 AM",  min:7*60+5,   cliente:"Espresso Americano", vence:"Indefinido",  turno:"madrugada" },
+  { hora:"8:00 AM", min:480, cliente:"BAC", vence:"06/08/2026", turno:"manana" },
+{ hora:"8:20 AM",  min:8*60+20,  cliente:"Sky Tours",          vence:"15/11/2026", turno:"manana" },
+{ hora:"8:30 AM",  min:8*60+30,  cliente:"COFISA",           vence:"Indefinido",  turno:"manana" },
+{ hora:"8:45 AM",  min:8*60+45,  cliente:"BP Agentes",         vence:"13/07/2026", turno:"manana" },
+  { hora:"8:45 AM", min:525, cliente:"BAC", vence:"06/08/2026", turno:"manana" },
+{ hora:"8:50 AM",  min:8*60+50,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },
+{ hora:"9:10 AM",  min:9*60+10,  cliente:"Subway",             vence:"Indefinido",  turno:"manana" },
+{ hora: "9:15 AM",  min: 555,      cliente: "El Gallo más Gallo", vence: "31/07/2026", turno: "manana", bg: "bg-manana" },
+{ hora:"9:20 AM",  min:9*60+20,  cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"manana" },
+{ hora:"9:30 AM",  min:9*60+30,  cliente:"Aquaroni",           vence:"13/08/2026", turno:"manana" },
+{ hora:"9:45 AM",  min:9*60+45,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },
+  { hora:"9:45 AM", min:585, cliente:"BAC", vence:"06/08/2026", turno:"manana" },
+{ hora:"10:15 AM", min:10*60+15, cliente:"Subway",             vence:"Indefinido",  turno:"manana" },
+{ hora:"11:30 AM", min:11*60+30, cliente:"Aquaroni",           vence:"13/08/2026", turno:"mediodia", bg:"amarillo" },
+  { hora:"11:30 AM", min:690, cliente:"BAC", vence:"06/08/2026", turno:"mediodia", bg:"amarillo" },
+{ hora:"12:05 PM", min:12*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
+  { hora:"12:15 PM", min:735, cliente:"BAC", vence:"06/08/2026", turno:"mediodia", bg:"amarillo" },
+{ hora:"12:25 PM", min:12*60+25, cliente:"COFISA",           vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
+{ hora:"12:40 PM", min:12*60+40, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
+{ hora:"1:05 PM",  min:13*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+{ hora:"1:25 PM",  min:13*60+25, cliente:"Subway",             vence:"Indefinido",  turno:"tarde" },
+  { hora:"1:30 PM", min:810, cliente:"BAC", vence:"06/08/2026", turno:"tarde" },
+{ hora:"1:40 PM",  min:13*60+40, cliente:"BP Remesas",         vence:"13/07/2026", turno:"tarde" },
+{ hora:"2:05 PM",  min:14*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+{ hora:"2:15 PM",  min:14*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"tarde" },
+  { hora:"2:15 PM", min:855, cliente:"BAC", vence:"06/08/2026", turno:"tarde" },
+{ hora:"2:45 PM",  min:14*60+45, cliente:"Ferretería El Baratillo", vence:"Indefinido",  turno:"tarde" },
+{ hora:"3:05 PM",  min:15*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+{ hora:"3:10 PM",  min:15*60+10, cliente:"COFISA",           vence:"Indefinido",  turno:"tarde" },
+  { hora:"3:15 PM", min:915, cliente:"BAC", vence:"06/08/2026", turno:"tarde" },
+{ hora:"3:20 PM",  min:15*60+20, cliente:"Sky Tours",          vence:"15/11/2026", turno:"tarde" },
+{ hora:"3:35 PM",  min:15*60+35, cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+{ hora:"5:15 PM",  min:17*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"atardecer" },
+  { hora:"5:15 PM", min:1035, cliente:"BAC", vence:"06/08/2026", turno:"atardecer" },
+{ hora:"5:45 PM",  min:17*60+45, cliente:"Espresso Americano", vence:"Indefinido",  turno:"atardecer" },
+  { hora:"6:15 PM", min:1095, cliente:"BAC", vence:"06/08/2026", turno:"atardecer" },
 ];
 
 const lrdr = [
