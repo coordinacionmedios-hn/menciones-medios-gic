@@ -849,50 +849,58 @@ setInterval(actualizar, 30000);
 </script>
 
     <script>
-    
-    
-    async function getSong() {
-      const display = document.getElementById('song-display');
-      const dot = document.getElementById('dot');
-      let found = false;
-      try {
-        const r = await fetch('https://ngrokhn.ngrok.pro/?action=playbackinfo', {
-          signal: AbortSignal.timeout(4000),
-          headers: { 'ngrok-skip-browser-warning': '1' }
-        });
-        const t = await r.text();
-        const xml = new DOMParser().parseFromString(t, "text/xml");
-        const trk = xml.querySelector('CurrentTrack TRACK');
-        if(trk) {
-          const a = (trk.getAttribute('ARTIST') || '').trim();
-          const title = (trk.getAttribute('TITLE') || '').trim();
-          const cast = (trk.getAttribute('CASTTITLE') || '').trim();
-          let song = '';
-          if (a && title) song = a + ' - ' + title;
-          else if (title) song = title;
-          else if (cast) song = cast;
-          else {
-            // Leer cualquier atributo disponible
-            const attrs = trk.attributes;
-            for (let i = 0; i < attrs.length; i++) {
-              if (attrs[i].value.trim()) { song = attrs[i].value.trim(); break; }
-            }
-          }
-          if (song) {
-            display.textContent = song.toUpperCase();
-            dot.className = 'status-dot dot-local';
-            found = true;
-          }
-        }
-      } catch(e) {}
-      if(!found) {
-        display.textContent = 'Sincronizando...';
-        dot.className = 'status-dot';
+const NOW_PLAYING_TOPIC = "gic-copan-stereo-ba1c1afb47079f3edc220196b5b5aa97";
+const NOW_PLAYING_BASE = "https://ntfy.sh/" + NOW_PLAYING_TOPIC;
+let nowPlayingSource = null;
+
+function mostrarTemaEnVivo(song) {
+  const display = document.getElementById("song-display");
+  const dot = document.getElementById("dot");
+  const limpio = String(song || "").trim();
+  if (!limpio) return;
+  display.textContent = limpio.toUpperCase();
+  dot.className = "status-dot dot-local";
+  dot.title = "Conectado en tiempo real";
+}
+
+async function cargarUltimoTema() {
+  try {
+    const r = await fetch(NOW_PLAYING_BASE + "/json?poll=1&since=latest", {
+      cache: "no-store"
+    });
+    const lineas = (await r.text()).trim().split(/\r?\n/).filter(Boolean);
+    for (let i = lineas.length - 1; i >= 0; i--) {
+      const data = JSON.parse(lineas[i]);
+      if (data.event === "message" && data.message) {
+        mostrarTemaEnVivo(data.message);
+        return;
       }
     }
-    getSong();
-    setInterval(getSong, 5000);
-    </script>
+  } catch (e) {}
+}
+
+function conectarTemaEnVivo() {
+  if (nowPlayingSource) nowPlayingSource.close();
+  nowPlayingSource = new EventSource(NOW_PLAYING_BASE + "/sse?since=latest");
+
+  nowPlayingSource.onmessage = (event) => {
+    try {
+      const data = JSON.parse(event.data);
+      if (data.event === "message" && data.message) {
+        mostrarTemaEnVivo(data.message);
+      }
+    } catch (e) {}
+  };
+
+  nowPlayingSource.onerror = () => {
+    const dot = document.getElementById("dot");
+    dot.className = "status-dot";
+    dot.title = "Reconectando...";
+  };
+}
+
+cargarUltimoTema().finally(conectarTemaEnVivo);
+</script>
     </body>
 </html>
 
