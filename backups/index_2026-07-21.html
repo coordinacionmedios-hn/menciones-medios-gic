@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horario de Menciones — Copán Stereo 96.3 FM</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #F5F0E8;
+    color: #2B4590;
+  }
+  #estado { font-weight: 700; text-align: center; padding: 24px; }
+</style>
+</head>
+<body>
+<div id="estado">Cargando horario de menciones…</div>
+<script>
+(async () => {
+  const fuentes = [
+    "https://cdn.jsdelivr.net/gh/coordinacionmedios-hn/menciones-copan-stereo@f04434c92bab85b90111b38c2c3dcf97a1ca7c8a/index.html",
+    "https://raw.githubusercontent.com/coordinacionmedios-hn/menciones-copan-stereo/f04434c92bab85b90111b38c2c3dcf97a1ca7c8a/index.html"
+  ];
+
+  let html = "";
+  for (const url of fuentes) {
+    try {
+      const respuesta = await fetch(url, { cache: "no-store" });
+      if (respuesta.ok) {
+        html = await respuesta.text();
+        break;
+      }
+    } catch (_) {}
+  }
+
+  if (!html) {
+    document.getElementById("estado").textContent =
+      "No fue posible cargar el horario. Verifique la conexión e intente nuevamente.";
+    return;
+  }
+
+  const activasElBaratillo = [
+    /^\{ hora:"9:20 AM",\s+min:9\*60\+20,\s+cliente:"Ferretería El Baratillo", vence:"Indefinido",\s+turno:"manana" \},\r?\n/m,
+    /^\{ hora:"12:40 PM",\s+min:12\*60\+40,\s+cliente:"Ferretería El Baratillo", vence:"Indefinido",\s+turno:"mediodia", bg:"amarillo" \},\r?\n/m,
+    /^\{ hora:"2:45 PM",\s+min:14\*60\+45,\s+cliente:"Ferretería El Baratillo", vence:"Indefinido",\s+turno:"tarde" \},\r?\n/m
+  ];
+
+  for (const patron of activasElBaratillo) {
+    html = html.replace(patron, "");
+  }
+
+  const salto = html.includes("\r\n") ? "\r\n" : "\n";
+  const vencidasElBaratillo = [
+    '  { hora:"9:20 AM",  min:9*60+20,  cliente:"Ferretería El Baratillo", vence:"20/07/2026", turno:"manana" },',
+    '  { hora:"12:40 PM", min:12*60+40, cliente:"Ferretería El Baratillo", vence:"20/07/2026", turno:"mediodia", bg:"amarillo" },',
+    '  { hora:"2:45 PM",  min:14*60+45, cliente:"Ferretería El Baratillo", vence:"20/07/2026", turno:"tarde" },'
+  ].join(salto) + salto;
+
+  const marcador = /const vencidas = \[\r?\n/;
+  if (!marcador.test(html)) {
+    document.getElementById("estado").textContent =
+      "No se encontró la sección de menciones vencidas.";
+    return;
+  }
+
+  html = html.replace(marcador, coincidencia => coincidencia + vencidasElBaratillo);
+
+  document.open();
+  document.write(html);
+  document.close();
+})();
+</script>
+</body>
+</html>
