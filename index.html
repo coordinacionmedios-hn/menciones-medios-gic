@@ -124,6 +124,26 @@
   }
   .leyenda-item { display: flex; align-items: center; gap: 6px; font-size: 0.82em; color: #444; }
   .leyenda-color { width: 18px; height: 18px; border-radius: 3px; border: 1px solid #aaa; }
+  /* Contenedor de vistas sin salto de scroll */
+  #contenedor-vistas {
+    position: relative;
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  #vista-copan, #vista-ritmo {
+    width: 100%;
+    transition: opacity 0.15s ease;
+  }
+  #vista-copan.oculta, #vista-ritmo.oculta {
+    position: absolute;
+    top: 0; left: 0;
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+    z-index: -1;
+  }
+
   .leyenda-gic {
     width: 100%;
     text-align: center;
@@ -305,6 +325,7 @@
 </div>
 
 
+<div id="contenedor-vistas">
 <div id="vista-copan">
 <table id="tabla-menciones">
   <thead>
@@ -323,7 +344,7 @@
 </table>
 </div><!-- /vista-copan -->
 
-<div id="vista-ritmo" style="display:none">
+<div id="vista-ritmo" class="oculta">
 <table id="tabla-ritmo">
   <thead>
     <tr>
@@ -338,6 +359,7 @@
   <tbody id="filas-ritmo-vencidas"></tbody>
 </table>
 </div><!-- /vista-ritmo -->
+</div><!-- /contenedor-vistas -->
 
 <div class="links-institucionales">
   <a href="http://www.copanstereo.com" target="_blank">🌐 copanstereo.com</a>
@@ -979,8 +1001,8 @@ function cambiarEmisora(emisora) {
   emisoraActual = emisora;
   document.getElementById('tab-copan').classList.toggle('activa-tab', emisora === 'copan');
   document.getElementById('tab-ritmo').classList.toggle('activa-tab', emisora === 'ritmo');
-  document.getElementById('vista-copan').style.display = (emisora === 'copan') ? '' : 'none';
-  document.getElementById('vista-ritmo').style.display = (emisora === 'ritmo') ? '' : 'none';
+  document.getElementById('vista-copan').classList.toggle('oculta', emisora !== 'copan');
+  document.getElementById('vista-ritmo').classList.toggle('oculta', emisora !== 'ritmo');
 }
 </script>
 
