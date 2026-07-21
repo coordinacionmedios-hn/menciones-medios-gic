@@ -214,23 +214,43 @@
       .header-center h1 { font-size: 1rem !important; color: #2B4590 !important; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px; }
       #reloj { font-size: 1.3rem !important; color: #1a3a7a !important; font-weight: bold; letter-spacing: 1px; }
 
-      #widget-vivo {
-        display: none !important;
+      /* SELECTOR DE EMISORA */
+      #selector-emisora {
         width: 100%;
         max-width: 620px;
         margin: 0 auto 10px auto;
-        background: white;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        border-left: 6px solid #1a7a1a;
         display: flex;
-        align-items: center;
-        padding: 10px 15px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        gap: 0;
         box-sizing: border-box;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
       }
-      .label-vivo { font-size: 0.75rem; color: #1a7a1a; font-weight: bold; margin-right: 12px; text-transform: uppercase; }
-      #song-title { font-size: 0.9rem; color: #333; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+      .tab-emisora {
+        flex: 1;
+        padding: 12px 10px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border: none;
+        background: #e8ecf8;
+        color: #2B4590;
+        letter-spacing: 0.5px;
+        transition: background 0.2s, color 0.2s;
+        outline: none;
+      }
+      .tab-emisora:first-child { border-right: 1px solid #c5cde8; }
+      .tab-emisora.activa-tab {
+        background: #2B4590;
+        color: #fff;
+      }
+      .tab-emisora:hover:not(.activa-tab) { background: #d0d8f0; }
+
+      /* Widget oculto (tecnologia intacta) */
+      #widget-vivo { display: none !important; }
+      .label-vivo { display: none; }
+      #song-title { display: none; }
     
   .status-dot {
     height: 8px;
@@ -258,7 +278,11 @@
 </div>
 
 
-<div id="widget-vivo">
+<div id="selector-emisora">
+  <button class="tab-emisora activa-tab" id="tab-copan" onclick="cambiarEmisora('copan')">📻 MENCIONES COPÁN STEREO</button>
+  <button class="tab-emisora" id="tab-ritmo" onclick="cambiarEmisora('ritmo')">🎵 MENCIONES RADIO RITMO</button>
+</div>
+<div id="widget-vivo" style="display:none">
   <div class="label-vivo">🎵 EN VIVO:</div>
   <div id="song-title">
     <span id="dot" class="status-dot"></span>
@@ -282,6 +306,23 @@
   <tbody class="sec-title"><tr><th colspan="4">MENCIONES VENCIDAS</th></tr></tbody>
   <tbody id="filas-vencidas"></tbody>
 </table>
+</div><!-- /vista-copan -->
+
+<div id="vista-ritmo" style="display:none">
+<table id="tabla-ritmo" style="width:100%;max-width:620px;margin:0 auto;border-collapse:collapse;font-size:0.93em;">
+  <thead>
+    <tr>
+      <th style="background:#2B4590;color:#fff;padding:8px 10px;text-align:left;">HORA</th>
+      <th style="background:#2B4590;color:#fff;padding:8px 10px;text-align:left;">CLIENTE</th>
+      <th style="background:#2B4590;color:#fff;padding:8px 10px;text-align:left;">VENCE</th>
+      <th style="background:#2B4590;color:#fff;padding:8px 10px;text-align:left;">▶</th>
+    </tr>
+  </thead>
+  <tbody id="filas-ritmo">
+    <tr><td colspan="4" style="text-align:center;padding:30px;color:#888;font-style:italic;">Próximamente — menciones de Radio Ritmo</td></tr>
+  </tbody>
+</table>
+</div><!-- /vista-ritmo -->
 
 <div class="links-institucionales">
   <a href="http://www.copanstereo.com" target="_blank">🌐 copanstereo.com</a>
@@ -873,6 +914,17 @@ function actualizar() {
 }
 actualizar();
 setInterval(actualizar, 30000);
+
+// === SELECTOR DE EMISORA ===
+let emisoraActual = 'copan';
+
+function cambiarEmisora(emisora) {
+  emisoraActual = emisora;
+  document.getElementById('tab-copan').classList.toggle('activa-tab', emisora === 'copan');
+  document.getElementById('tab-ritmo').classList.toggle('activa-tab', emisora === 'ritmo');
+  document.getElementById('vista-copan').style.display = (emisora === 'copan') ? '' : 'none';
+  document.getElementById('vista-ritmo').style.display = (emisora === 'ritmo') ? '' : 'none';
+}
 </script>
 
     <script>
