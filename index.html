@@ -265,6 +265,12 @@
 .amarillo { background-color: #FFFF00 !important; color: #000 !important; }
 .bg-azul { background-color: #0070C0 !important; color: #fff !important; }
 .bg-verde { background-color: #00B050 !important; color: #fff !important; }
+
+  /* Radio Ritmo: misma tabla que Copán */
+  #tabla-ritmo { width: 100%; max-width: 620px; margin: 0 auto; border-collapse: collapse; font-size: 0.93em; }
+  #tabla-ritmo th, #tabla-ritmo td { border: 1px solid #ddd; padding: 6px 10px; }
+  #tabla-ritmo thead th { background: #2B4590; color: #fff; font-weight: 700; text-align: left; }
+
 </style>
 </head>
 <body>
@@ -309,18 +315,18 @@
 </div><!-- /vista-copan -->
 
 <div id="vista-ritmo" style="display:none">
-<table id="tabla-ritmo" style="width:100%;max-width:620px;margin:0 auto;border-collapse:collapse;font-size:0.93em;">
+<table id="tabla-ritmo">
   <thead>
     <tr>
-      <th style="background:#2B4590;color:#fff;padding:8px 10px;text-align:left;">HORA</th>
-      <th style="background:#2B4590;color:#fff;padding:8px 10px;text-align:left;">CLIENTE</th>
-      <th style="background:#2B4590;color:#fff;padding:8px 10px;text-align:left;">VENCE</th>
-      <th style="background:#2B4590;color:#fff;padding:8px 10px;text-align:left;">▶</th>
+      <th>HORA</th>
+      <th>CLIENTE</th>
+      <th>VENCE</th>
+      <th>▶</th>
     </tr>
   </thead>
-  <tbody id="filas-ritmo">
-    <tr><td colspan="4" style="text-align:center;padding:30px;color:#888;font-style:italic;">Próximamente — menciones de Radio Ritmo</td></tr>
-  </tbody>
+  <tbody id="filas-ritmo-activas"></tbody>
+  <tbody class="sec-title"><tr><th colspan="4">MENCIONES VENCIDAS</th></tr></tbody>
+  <tbody id="filas-ritmo-vencidas"></tbody>
 </table>
 </div><!-- /vista-ritmo -->
 
@@ -914,6 +920,53 @@ function actualizar() {
 }
 actualizar();
 setInterval(actualizar, 30000);
+
+// === RADIO RITMO — Base de datos de menciones ===
+// Para agregar menciones: { hora:"HH:MM AM/PM", min:H*60+M, cliente:"Nombre", vence:"DD/MM/YYYY o Indefinido", turno:"manana|mediodia|tarde|noche" }
+const activasRitmo = [
+  // (vacío — pendiente de configurar)
+];
+const vencidasRitmo = [
+  // (vacío)
+];
+
+// Render Radio Ritmo — activas
+const tbodyRA = document.getElementById("filas-ritmo-activas");
+if (activasRitmo.length === 0) {
+  const tr = document.createElement("tr");
+  const td = document.createElement("td");
+  td.colSpan = 4;
+  td.style.cssText = "text-align:center;padding:30px;color:#888;font-style:italic;";
+  td.textContent = "Sin menciones configuradas aún";
+  tr.appendChild(td);
+  tbodyRA.appendChild(tr);
+} else {
+  activasRitmo.forEach((m, idx) => {
+    const tr = document.createElement("tr");
+    tr.id = "fila-ritmo-" + idx;
+    tr.className = m.turno + (m.bg ? " " + m.bg : "");
+    const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
+    const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+    const tdV = document.createElement("td");
+    tdV.className = "vence " + (m.vence==="Indefinido" ? "vence-indef" : "vence-fecha");
+    tdV.textContent = m.vence;
+    const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-ritmo-"+idx;
+    tr.append(tdH, tdC, tdV, tdF);
+    tbodyRA.appendChild(tr);
+  });
+}
+
+// Render Radio Ritmo — vencidas
+const tbodyRV = document.getElementById("filas-ritmo-vencidas");
+vencidasRitmo.forEach(m => {
+  const tr = document.createElement("tr"); tr.className="vencida";
+  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+  const tdV = document.createElement("td"); tdV.className="vence"; tdV.textContent=m.vence;
+  const tdF = document.createElement("td"); tdF.className="flecha";
+  tr.append(tdH, tdC, tdV, tdF);
+  tbodyRV.appendChild(tr);
+});
 
 // === SELECTOR DE EMISORA ===
 let emisoraActual = 'copan';
