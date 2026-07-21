@@ -296,6 +296,9 @@
 .bg-azul { background-color: #0070C0 !important; color: #fff !important; }
 .bg-verde { background-color: #00B050 !important; color: #fff !important; }
 
+  /* Radio Ritmo: idéntica a tabla Copán */
+  #tabla-ritmo { width: 100%; max-width: 620px; margin: 0 auto 10px auto; border-collapse: collapse; font-size: 0.93em; }
+
 </style>
 </head>
 <body>
@@ -364,6 +367,8 @@
     </tr>
   </thead>
   <tbody id="filas-ritmo-activas"></tbody>
+  <tbody class="sec-title sec-lrdr"><tr><th colspan="4">MENCIONES — LA RUTA DEL ROCK</th></tr></tbody>
+  <tbody id="filas-lrdr-ritmo"></tbody>
   <tbody class="sec-title"><tr><th colspan="4">MENCIONES VENCIDAS</th></tr></tbody>
   <tbody id="filas-ritmo-vencidas"></tbody>
 </table>
@@ -959,7 +964,7 @@ setInterval(actualizar, 30000);
 // === RADIO RITMO — Base de datos de menciones ===
 // Para agregar menciones: { hora:"HH:MM AM/PM", min:H*60+M, cliente:"Nombre", vence:"DD/MM/YYYY o Indefinido", turno:"manana|mediodia|tarde|noche" }
 const activasRitmo = [
-  // (vacío — pendiente de configurar)
+  // (vacío — menciones regulares pendientes)
 ];
 const vencidasRitmo = [
   // (vacío)
@@ -1001,6 +1006,23 @@ vencidasRitmo.forEach(m => {
   const tdF = document.createElement("td"); tdF.className="flecha";
   tr.append(tdH, tdC, tdV, tdF);
   tbodyRV.appendChild(tr);
+});
+
+// === RADIO RITMO — La Ruta del Rock ===
+const lrdrRitmo = [
+  { hora:"8:45 AM", min:8*60+45, cliente:"Laboratorio Bueso Arias", vence:"20/10/2026" },
+];
+const tbodyLR = document.getElementById("filas-lrdr-ritmo");
+lrdrRitmo.forEach((m, idx) => {
+  const tr = document.createElement("tr");
+  tr.id = "fila-lrdr-ritmo-" + idx;
+  tr.className = "lrdr-row";
+  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+  const tdV = document.createElement("td"); tdV.className="vence vence-fecha"; tdV.textContent=m.vence;
+  const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-lrdr-ritmo-"+idx;
+  tr.append(tdH, tdC, tdV, tdF);
+  tbodyLR.appendChild(tr);
 });
 
 // === SELECTOR DE EMISORA ===
