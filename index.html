@@ -985,9 +985,6 @@ function actualizar() {
     if(el) el.textContent="👈🏻";
   }
 }
-actualizar();
-setInterval(actualizar, 30000);
-
 // === RADIO RITMO — Base de datos de menciones ===
 // Para agregar menciones: { hora:"HH:MM AM/PM", min:H*60+M, cliente:"Nombre", vence:"DD/MM/YYYY o Indefinido", turno:"manana|mediodia|tarde|noche" }
 const activasRitmo = [
@@ -1000,6 +997,9 @@ const activasRitmo = [
 const vencidasRitmo = [
   // (vacío)
 ];
+
+actualizar();
+setInterval(actualizar, 30000);
 
 // Render Radio Ritmo — activas
 const tbodyRA = document.getElementById("filas-ritmo-activas");
