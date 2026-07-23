@@ -968,6 +968,22 @@ function actualizar() {
     if(tr) tr.classList.add("activa");
     if(el) el.textContent="👈🏻";
   }
+
+  // === INDICADOR RADIO RITMO ===
+  let ritmoIdx = -1;
+  for(let i=0; i<activasRitmo.length; i++) { if(total>=activasRitmo[i].min) ritmoIdx=i; }
+  activasRitmo.forEach((_,i) => {
+    const el = document.getElementById("flecha-ritmo-"+i);
+    const tr = document.getElementById("fila-ritmo-"+i);
+    if(el) el.textContent="";
+    if(tr) tr.classList.remove("activa");
+  });
+  if(ritmoIdx>=0) {
+    const tr = document.getElementById("fila-ritmo-"+ritmoIdx);
+    const el = document.getElementById("flecha-ritmo-"+ritmoIdx);
+    if(tr) tr.classList.add("activa");
+    if(el) el.textContent="👈🏻";
+  }
 }
 actualizar();
 setInterval(actualizar, 30000);
