@@ -785,6 +785,8 @@ La cita es este miércoles 5 de agosto, en colonia Elder Romero, a partir de las
 
 Te invita, Alcalde Aníbal Erazo Alvarado y su Corporación Municipal.`,
 };
+MENCIONES["INE (solo sábados)"] = MENCIONES["INE"];
+
 const activas = [
 { hora:"6:45 AM",  min:6*60+45,  cliente:"Banpaís",            vence:"Indefinido",  turno:"madrugada" },
 { hora:"7:05 AM",  min:7*60+5,   cliente:"Espresso Americano", vence:"Indefinido",  turno:"madrugada" },
@@ -1001,6 +1003,7 @@ function actualizar() {
 // === RADIO RITMO — Base de datos de menciones ===
 // Para agregar menciones: { hora:"HH:MM AM/PM", min:H*60+M, cliente:"Nombre", vence:"DD/MM/YYYY o Indefinido", turno:"manana|mediodia|tarde|noche" }
 const activasRitmo = [
+  { hora:"8:20 AM",  min:8*60+20, cliente:"INE (solo sábados)", vence:"04/09/2026", turno:"manana" },
   { hora:"8:45 AM",  min:8*60+45,  cliente:"Laboratorio Bueso Arias", vence:"20/10/2026", turno:"manana" },
   { hora:"9:15 AM",  min:9*60+15,  cliente:"Hospital El Carmen",       vence:"30/09/2026", turno:"manana" },
   { hora:"9:45 AM",  min:9*60+45,  cliente:"Replast",                  vence:"26/08/2026", turno:"manana" },
