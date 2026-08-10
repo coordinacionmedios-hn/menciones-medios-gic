@@ -40,6 +40,7 @@
     max-width: 620px;
     margin: 0 auto 24px auto;
     border-collapse: collapse;
+    table-layout: fixed;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
@@ -57,6 +58,8 @@
     border-bottom: 1px solid #000;
   }
   td.hora   { text-align: center; font-weight: bold; width: 115px; min-width: 115px; }
+  th.dias, td.dias { text-align: center; width: 68px; min-width: 68px; white-space: nowrap; }
+  td.dias { font-size: 0.78em; font-weight: 600; }
   td.cliente { font-weight: bold; cursor: pointer; }
   td.cliente:hover { text-decoration: underline; opacity: 0.85; }
   td.vence  { text-align: center; width: 115px; font-size: 0.88em; }
@@ -332,6 +335,7 @@
 <table id="tabla-menciones">
   <colgroup>
     <col style="width:115px;min-width:115px;">
+    <col style="width:68px;min-width:68px;">
     <col>
     <col style="width:115px;min-width:115px;">
     <col style="width:36px;min-width:36px;">
@@ -339,15 +343,16 @@
   <thead>
     <tr>
       <th>HORA</th>
+      <th class="dias">DÍAS</th>
       <th>CLIENTE</th>
       <th>VENCE</th>
       <th>▶</th>
     </tr>
   </thead>
   <tbody id="filas-activas"></tbody>
-  <tbody class="sec-title sec-lrdr"><tr><th colspan="4">MENCIONES — LA RUTA DEL ROCK</th></tr></tbody>
+  <tbody class="sec-title sec-lrdr"><tr><th colspan="5">MENCIONES — LA RUTA DEL ROCK</th></tr></tbody>
   <tbody id="filas-lrdr"></tbody>
-  <tbody class="sec-title"><tr><th colspan="4">MENCIONES VENCIDAS</th></tr></tbody>
+  <tbody class="sec-title"><tr><th colspan="5">MENCIONES VENCIDAS</th></tr></tbody>
   <tbody id="filas-vencidas"></tbody>
 </table>
 </div><!-- /vista-copan -->
@@ -356,6 +361,7 @@
 <table id="tabla-ritmo">
   <colgroup>
     <col style="width:115px;min-width:115px;">
+    <col style="width:68px;min-width:68px;">
     <col>
     <col style="width:115px;min-width:115px;">
     <col style="width:36px;min-width:36px;">
@@ -363,15 +369,14 @@
   <thead>
     <tr>
       <th>HORA</th>
+      <th class="dias">DÍAS</th>
       <th>CLIENTE</th>
       <th>VENCE</th>
       <th>▶</th>
     </tr>
   </thead>
   <tbody id="filas-ritmo-activas"></tbody>
-  <tbody class="sec-title"><tr><th colspan="4">MENCIONES — SOLO SÁBADOS</th></tr></tbody>
-  <tbody id="filas-ritmo-sabados"></tbody>
-  <tbody class="sec-title"><tr><th colspan="4">MENCIONES VENCIDAS</th></tr></tbody>
+  <tbody class="sec-title"><tr><th colspan="5">MENCIONES VENCIDAS</th></tr></tbody>
   <tbody id="filas-ritmo-vencidas"></tbody>
 </table>
 </div><!-- /vista-ritmo -->
@@ -898,9 +903,11 @@ activas.forEach((m, idx) => {
   tr.className = m.turno + (m.bg ? " " + m.bg : "");
 
   const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
-  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+  const info = datosCliente(m.cliente);
+  const tdD = document.createElement("td"); tdD.className="dias"; tdD.textContent=info.dias;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=info.nombre;
   tdC.title = "Clic para ver la mención completa";
-  tdC.onclick = () => abrirModal(m.cliente);
+  tdC.onclick = () => abrirModal(info.nombre);
 
   const tdV = document.createElement("td");
   tdV.className = "vence " + (m.vence==="Indefinido" ? "vence-indef" : "vence-fecha");
@@ -908,7 +915,7 @@ activas.forEach((m, idx) => {
 
   const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-"+idx;
 
-  tr.append(tdH, tdC, tdV, tdF);
+  tr.append(tdH, tdD, tdC, tdV, tdF);
   tbody.appendChild(tr);
 });
 
@@ -917,10 +924,12 @@ const tbodyV = document.getElementById("filas-vencidas");
 vencidas.forEach(m => {
   const tr = document.createElement("tr"); tr.className="vencida";
   const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
-  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+  const info = datosCliente(m.cliente);
+  const tdD = document.createElement("td"); tdD.className="dias"; tdD.textContent=info.dias;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=info.nombre;
   const tdV = document.createElement("td"); tdV.className="vence"; tdV.textContent=m.vence;
   const tdF = document.createElement("td"); tdF.className="flecha";
-  tr.append(tdH, tdC, tdV, tdF);
+  tr.append(tdH, tdD, tdC, tdV, tdF);
   tbodyV.appendChild(tr);
 });
 
@@ -931,18 +940,25 @@ lrdr.forEach((m, idx) => {
   tr.id = "fila-lrdr-" + idx;
   tr.className = "lrdr-row";
   const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
-  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
-  tdC.onclick = () => abrirModal(m.cliente);
+  const info = datosCliente(m.cliente);
+  const tdD = document.createElement("td"); tdD.className="dias"; tdD.textContent=info.dias;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=info.nombre;
+  tdC.onclick = () => abrirModal(info.nombre);
   tdC.title = "Clic para ver la mención completa";
   const tdV = document.createElement("td"); 
   tdV.className="vence " + (m.vence==="Indefinido" ? "vence-indef" : "vence-fecha");
   tdV.textContent=m.vence;
   const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-lrdr-"+idx;
-  tr.append(tdH, tdC, tdV, tdF);
+  tr.append(tdH, tdD, tdC, tdV, tdF);
   tbodyL.appendChild(tr);
 });
 
 // Modal
+function datosCliente(cliente) {
+  const match = cliente.match(/\s*\((L-V|L-S|L-D|S)\)\s*$/);
+  if (!match) return { nombre: cliente, dias: "" };
+  return { nombre: cliente.slice(0, match.index).trim(), dias: "(" + match[1] + ")" };
+}
 function abrirModal(cliente) {
   const clienteBase = cliente.replace(/\s*(?:\([^)]*\)|\[[^\]]*\]|>[^<]*<)\s*$/, "").trim();
   const texto = MENCIONES[cliente] || MENCIONES[clienteBase] || "Mención no disponible.";
@@ -1012,24 +1028,7 @@ function actualizar() {
     if(el) el.textContent="👈🏻";
   }
 
-  // Indicador de menciones exclusivas de los sábados
-  const esSabado = now.getDay() === 6;
-  let sabadoIdx = -1;
-  if(esSabado) {
-    for(let i=0; i<sabadosRitmo.length; i++) { if(total>=sabadosRitmo[i].min) sabadoIdx=i; }
-  }
-  sabadosRitmo.forEach((_,i) => {
-    const el = document.getElementById("flecha-ritmo-sabado-"+i);
-    const tr = document.getElementById("fila-ritmo-sabado-"+i);
-    if(el) el.textContent="";
-    if(tr) tr.classList.remove("activa");
-  });
-  if(esSabado && sabadoIdx>=0) {
-    const tr = document.getElementById("fila-ritmo-sabado-"+sabadoIdx);
-    const el = document.getElementById("flecha-ritmo-sabado-"+sabadoIdx);
-    if(tr) tr.classList.add("activa");
-    if(el) el.textContent="👈🏻";
-  }
+
 }
 // === RADIO RITMO — Base de datos de menciones ===
 // Para agregar menciones: { hora:"HH:MM AM/PM", min:H*60+M, cliente:"Nombre", vence:"DD/MM/YYYY o Indefinido", turno:"manana|mediodia|tarde|noche" }
@@ -1044,9 +1043,6 @@ const activasRitmo = [
   { hora:"2:45 PM",  min:14*60+45, cliente:"Hotel Fransol (L-D)",             vence:"29/10/2026", turno:"tarde" },
   { hora:"4:40 PM",  min:16*60+40, cliente:"Hotel Fransol (L-D)",             vence:"29/10/2026", turno:"atardecer" },
 ];
-const sabadosRitmo = [
-  { hora:"8:20 AM", min:8*60+20, cliente:"INE (S)", vence:"04/09/2026", turno:"manana" },
-];
 const vencidasRitmo = [
 
   // (vacío)
@@ -1060,7 +1056,7 @@ const tbodyRA = document.getElementById("filas-ritmo-activas");
 if (activasRitmo.length === 0) {
   const tr = document.createElement("tr");
   const td = document.createElement("td");
-  td.colSpan = 4;
+  td.colSpan = 5;
   td.style.cssText = "text-align:center;padding:30px;color:#888;font-style:italic;";
   td.textContent = "Sin menciones configuradas aún";
   tr.appendChild(td);
@@ -1071,43 +1067,30 @@ if (activasRitmo.length === 0) {
     tr.id = "fila-ritmo-" + idx;
     tr.className = m.turno + (m.bg ? " " + m.bg : "");
     const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
-    const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
-    tdC.onclick = () => abrirModal(m.cliente);
+    const info = datosCliente(m.cliente);
+    const tdD = document.createElement("td"); tdD.className="dias"; tdD.textContent=info.dias;
+    const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=info.nombre;
+    tdC.onclick = () => abrirModal(info.nombre);
     const tdV = document.createElement("td");
     tdV.className = "vence " + (m.vence==="Indefinido" ? "vence-indef" : "vence-fecha");
     tdV.textContent = m.vence;
     const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-ritmo-"+idx;
-    tr.append(tdH, tdC, tdV, tdF);
+    tr.append(tdH, tdD, tdC, tdV, tdF);
     tbodyRA.appendChild(tr);
   });
 }
-
-// Render Radio Ritmo — solo sábados
-const tbodyRS = document.getElementById("filas-ritmo-sabados");
-sabadosRitmo.forEach((m, idx) => {
-  const tr = document.createElement("tr");
-  tr.id = "fila-ritmo-sabado-" + idx;
-  tr.className = m.turno + (m.bg ? " " + m.bg : "");
-  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
-  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
-  tdC.onclick = () => abrirModal(m.cliente);
-  const tdV = document.createElement("td");
-  tdV.className = "vence " + (m.vence==="Indefinido" ? "vence-indef" : "vence-fecha");
-  tdV.textContent = m.vence;
-  const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-ritmo-sabado-"+idx;
-  tr.append(tdH, tdC, tdV, tdF);
-  tbodyRS.appendChild(tr);
-});
 
 // Render Radio Ritmo — vencidas
 const tbodyRV = document.getElementById("filas-ritmo-vencidas");
 vencidasRitmo.forEach(m => {
   const tr = document.createElement("tr"); tr.className="vencida";
   const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
-  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+  const info = datosCliente(m.cliente);
+  const tdD = document.createElement("td"); tdD.className="dias"; tdD.textContent=info.dias;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=info.nombre;
   const tdV = document.createElement("td"); tdV.className="vence"; tdV.textContent=m.vence;
   const tdF = document.createElement("td"); tdF.className="flecha";
-  tr.append(tdH, tdC, tdV, tdF);
+  tr.append(tdH, tdD, tdC, tdV, tdF);
   tbodyRV.appendChild(tr);
 });
 
