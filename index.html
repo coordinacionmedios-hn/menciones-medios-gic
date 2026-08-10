@@ -676,13 +676,15 @@ Si meter un gol emociona, imagínate incrementar tus ahorros y ganar. Con Sueña
 MENCIÓN 2:
 Abre tu cuenta o incrementa tus ahorros en Banco Cuscatlán. Con Sueña y Ahorra, por cada L1,000 recibes un boleto electrónico. Entre más ahorras, más oportunidades tienes de ganar uno de los 25 Smart TVs de 58 pulgadas. Banco Cuscatlán, tu dinero juega por ti.`,
   "UNITEC": `Mención en Vivo
-UNITEC — Medicina y Diseño de Modas
+UNITEC — Licenciatura en Nutrición
 
-MENCIÓN MEDICINA:
-Cuando transmitís calma en momentos de emergencia, destacás como un gran médico... Matricúlate en UNITEC Tegucigalpa y sé el profesional que la salud necesita.
+Un gran nutricionista contribuye al bienestar de los demás y crea soluciones que cambian vidas.
 
-MENCIÓN DISEÑO DE MODAS:
-Cuando creás con propósito, marcás vidas y demostrás el profesional que sos... Estudiá Diseño de Moda en UNITEC Tegucigalpa y sé el profesional que el mundo necesita.`,
+¿Querés ser ese profesional?
+
+Matricúlate en la Licenciatura en Nutrición en UNITEC y sé el profesional que tu país necesita.
+
+Conocé más en www.unitec.edu`,
 
   "Subway": `Mención en Vivo
 Subway Series, 2 de 3
@@ -786,12 +788,15 @@ La cita es este miércoles 5 de agosto, en colonia Elder Romero, a partir de las
 Te invita, Alcalde Aníbal Erazo Alvarado y su Corporación Municipal.`,
 };
 MENCIONES["INE (solo sábados)"] = MENCIONES["INE"];
+MENCIONES["UNITEC (lunes a sábado)"] = MENCIONES["UNITEC"];
 
 const activas = [
+{ hora:"6:20 AM",  min:6*60+20,  cliente:"UNITEC (lunes a sábado)", vence:"09/09/2026", turno:"madrugada" },
 { hora:"6:45 AM",  min:6*60+45,  cliente:"Banpaís",            vence:"Indefinido",  turno:"madrugada" },
 { hora:"7:05 AM",  min:7*60+5,   cliente:"Espresso Americano", vence:"Indefinido",  turno:"madrugada" },
   { hora:"7:40 AM",  min:7*60+40,  cliente:"Banpaís",            vence:"Indefinido",  turno:"madrugada" },
 
+  { hora:"8:10 AM",  min:8*60+10, cliente:"UNITEC (lunes a sábado)", vence:"09/09/2026", turno:"manana" },
   { hora:"8:20 AM",  min:8*60+20, cliente:"INE", vence:"04/09/2026", turno:"manana" },
 { hora:"8:45 AM",  min:8*60+45,  cliente:"Banpaís",            vence:"Indefinido",  turno:"manana" },
 { hora:"8:50 AM",  min:8*60+50,  cliente:"Jireth",             vence:"08/10/2026", turno:"manana" },
@@ -804,6 +809,7 @@ const activas = [
 { hora:"11:30 AM", min:11*60+30, cliente:"Aquaroni",           vence:"13/08/2026", turno:"mediodia", bg:"amarillo" },
 { hora:"11:45 AM", min:11*60+45, cliente:"Hotel Fransol", vence:"29/10/2026", turno:"mediodia", bg:"amarillo" },
 { hora:"12:05 PM", min:12*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"mediodia", bg:"amarillo" },
+{ hora:"12:40 PM", min:12*60+40, cliente:"UNITEC (lunes a sábado)", vence:"09/09/2026", turno:"mediodia", bg:"amarillo" },
 { hora:"1:05 PM",  min:13*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
 { hora:"1:25 PM",  min:13*60+25, cliente:"Subway",             vence:"Indefinido",  turno:"tarde" },
 
@@ -814,6 +820,7 @@ const activas = [
 { hora:"2:35 PM", min:14*60+35, cliente:"El Gallo más Gallo", vence:"31/08/2026", turno:"tarde" },
 { hora:"2:45 PM", min:14*60+45, cliente:"Hotel Fransol", vence:"29/10/2026", turno:"tarde" },
 { hora:"3:05 PM",  min:15*60+5,  cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
+{ hora:"3:20 PM",  min:15*60+20, cliente:"UNITEC (lunes a sábado)", vence:"09/09/2026", turno:"tarde" },
 { hora:"3:35 PM",  min:15*60+35, cliente:"Espresso Americano", vence:"Indefinido",  turno:"tarde" },
 { hora:"4:40 PM", min:16*60+40, cliente:"Hotel Fransol", vence:"29/10/2026", turno:"atardecer" },
 { hora:"5:15 PM",  min:17*60+15, cliente:"Aquaroni",           vence:"13/08/2026", turno:"atardecer" },
