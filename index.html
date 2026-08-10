@@ -48,22 +48,23 @@
   thead th {
     background: #2B4590;
     color: #fff;
-    padding: 10px 14px;
+    padding: 10px 8px;
     font-size: 0.95em;
     text-align: center;
   }
   td {
-    padding: 8px 14px;
+    padding: 8px 8px;
     font-size: 0.95em;
     border-bottom: 1px solid #000;
   }
-  td.hora   { text-align: center; font-weight: bold; width: 115px; min-width: 115px; }
-  th.dias, td.dias { text-align: center; width: 68px; min-width: 68px; white-space: nowrap; }
+  td.hora   { text-align: center; font-weight: bold; width: 100px; min-width: 0; }
+  th.dias, td.dias { text-align: center; width: 58px; min-width: 0; white-space: nowrap; padding-left: 4px; padding-right: 4px; }
   td.dias { font-size: 0.78em; font-weight: 600; }
   td.cliente { font-weight: bold; cursor: pointer; }
   td.cliente:hover { text-decoration: underline; opacity: 0.85; }
-  td.vence  { text-align: center; width: 115px; font-size: 0.88em; }
-  td.flecha { text-align: center; width: 36px; font-size: 1.4em; }
+  td.vence  { text-align: center; width: 105px; min-width: 0; font-size: 0.88em; padding-left: 4px; padding-right: 4px; }
+  td.flecha { text-align: center; width: 42px; min-width: 0; padding: 8px 2px; font-size: 1.4em; }
+  thead th:last-child { width: 42px; min-width: 42px; padding-left: 2px; padding-right: 2px; }
 
   .madrugada { background: #A8CCFF; border-bottom: 1px solid #000; }
   .manana    { background: #A8DCBA; border-bottom: 1px solid #000; }
@@ -334,11 +335,11 @@
 <div id="vista-copan">
 <table id="tabla-menciones">
   <colgroup>
-    <col style="width:115px;min-width:115px;">
-    <col style="width:68px;min-width:68px;">
+    <col style="width:100px;min-width:0;">
+    <col style="width:58px;min-width:0;">
     <col>
-    <col style="width:115px;min-width:115px;">
-    <col style="width:36px;min-width:36px;">
+    <col style="width:100px;min-width:0;">
+    <col style="width:42px;min-width:0;">
   </colgroup>
   <thead>
     <tr>
@@ -360,11 +361,11 @@
 <div id="vista-ritmo" class="oculta">
 <table id="tabla-ritmo">
   <colgroup>
-    <col style="width:115px;min-width:115px;">
-    <col style="width:68px;min-width:68px;">
+    <col style="width:105px;min-width:0;">
+    <col style="width:58px;min-width:0;">
     <col>
-    <col style="width:115px;min-width:115px;">
-    <col style="width:36px;min-width:36px;">
+    <col style="width:105px;min-width:0;">
+    <col style="width:42px;min-width:0;">
   </colgroup>
   <thead>
     <tr>
