@@ -369,6 +369,8 @@
     </tr>
   </thead>
   <tbody id="filas-ritmo-activas"></tbody>
+  <tbody class="sec-title"><tr><th colspan="4">MENCIONES — SOLO SÁBADOS</th></tr></tbody>
+  <tbody id="filas-ritmo-sabados"></tbody>
   <tbody class="sec-title"><tr><th colspan="4">MENCIONES VENCIDAS</th></tr></tbody>
   <tbody id="filas-ritmo-vencidas"></tbody>
 </table>
@@ -1009,11 +1011,29 @@ function actualizar() {
     if(tr) tr.classList.add("activa");
     if(el) el.textContent="👈🏻";
   }
+
+  // Indicador de menciones exclusivas de los sábados
+  const esSabado = now.getDay() === 6;
+  let sabadoIdx = -1;
+  if(esSabado) {
+    for(let i=0; i<sabadosRitmo.length; i++) { if(total>=sabadosRitmo[i].min) sabadoIdx=i; }
+  }
+  sabadosRitmo.forEach((_,i) => {
+    const el = document.getElementById("flecha-ritmo-sabado-"+i);
+    const tr = document.getElementById("fila-ritmo-sabado-"+i);
+    if(el) el.textContent="";
+    if(tr) tr.classList.remove("activa");
+  });
+  if(esSabado && sabadoIdx>=0) {
+    const tr = document.getElementById("fila-ritmo-sabado-"+sabadoIdx);
+    const el = document.getElementById("flecha-ritmo-sabado-"+sabadoIdx);
+    if(tr) tr.classList.add("activa");
+    if(el) el.textContent="👈🏻";
+  }
 }
 // === RADIO RITMO — Base de datos de menciones ===
 // Para agregar menciones: { hora:"HH:MM AM/PM", min:H*60+M, cliente:"Nombre", vence:"DD/MM/YYYY o Indefinido", turno:"manana|mediodia|tarde|noche" }
 const activasRitmo = [
-  { hora:"8:20 AM",  min:8*60+20, cliente:"INE (S)", vence:"04/09/2026", turno:"manana" },
   { hora:"8:45 AM",  min:8*60+45,  cliente:"Laboratorio Bueso Arias (L-D)", vence:"20/10/2026", turno:"manana" },
   { hora:"9:15 AM",  min:9*60+15,  cliente:"Hospital El Carmen (L-S)",       vence:"30/09/2026", turno:"manana" },
   { hora:"9:45 AM",  min:9*60+45,  cliente:"Replast (L-S)",                  vence:"26/08/2026", turno:"manana" },
@@ -1023,6 +1043,9 @@ const activasRitmo = [
   { hora:"11:45 AM", min:11*60+45, cliente:"Hotel Fransol (L-D)",             vence:"29/10/2026", turno:"mediodia" },
   { hora:"2:45 PM",  min:14*60+45, cliente:"Hotel Fransol (L-D)",             vence:"29/10/2026", turno:"tarde" },
   { hora:"4:40 PM",  min:16*60+40, cliente:"Hotel Fransol (L-D)",             vence:"29/10/2026", turno:"atardecer" },
+];
+const sabadosRitmo = [
+  { hora:"8:20 AM", min:8*60+20, cliente:"INE (S)", vence:"04/09/2026", turno:"manana" },
 ];
 const vencidasRitmo = [
 
@@ -1058,6 +1081,23 @@ if (activasRitmo.length === 0) {
     tbodyRA.appendChild(tr);
   });
 }
+
+// Render Radio Ritmo — solo sábados
+const tbodyRS = document.getElementById("filas-ritmo-sabados");
+sabadosRitmo.forEach((m, idx) => {
+  const tr = document.createElement("tr");
+  tr.id = "fila-ritmo-sabado-" + idx;
+  tr.className = m.turno + (m.bg ? " " + m.bg : "");
+  const tdH = document.createElement("td"); tdH.className="hora"; tdH.textContent=m.hora;
+  const tdC = document.createElement("td"); tdC.className="cliente"; tdC.textContent=m.cliente;
+  tdC.onclick = () => abrirModal(m.cliente);
+  const tdV = document.createElement("td");
+  tdV.className = "vence " + (m.vence==="Indefinido" ? "vence-indef" : "vence-fecha");
+  tdV.textContent = m.vence;
+  const tdF = document.createElement("td"); tdF.className="flecha"; tdF.id="flecha-ritmo-sabado-"+idx;
+  tr.append(tdH, tdC, tdV, tdF);
+  tbodyRS.appendChild(tr);
+});
 
 // Render Radio Ritmo — vencidas
 const tbodyRV = document.getElementById("filas-ritmo-vencidas");
