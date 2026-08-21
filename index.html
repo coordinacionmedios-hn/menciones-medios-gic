@@ -1025,6 +1025,8 @@ function actualizar() {
   // === INDICADOR RADIO RITMO ===
   let ritmoIdx = -1;
   for(let i=0; i<activasRitmo.length; i++) { if(total>=activasRitmo[i].min) ritmoIdx=i; }
+  // Antes de la primera mención del día, señalar la próxima programada.
+  if(ritmoIdx < 0 && activasRitmo.length > 0) ritmoIdx = 0;
   activasRitmo.forEach((_,i) => {
     const el = document.getElementById("flecha-ritmo-"+i);
     const tr = document.getElementById("fila-ritmo-"+i);
