@@ -376,6 +376,15 @@
   .header-box h1 { color: #2B4590; }
   .header-box #reloj { color: #1a3a7a; }
   .header-box .header-location { color: #555; }
+  /* Fija el centro del encabezado para que cambiar de emisora no lo desplace. */
+  .header-box { position: relative; }
+  .header-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 230px;
+    transform: translate(-50%, calc(-50% + 11px));
+  }
 </style>
 </head>
 <body>
@@ -442,10 +451,10 @@
 <div id="vista-ritmo" class="oculta">
 <table id="tabla-ritmo">
   <colgroup>
-    <col style="width:105px;min-width:0;">
+    <col style="width:100px;min-width:0;">
     <col style="width:58px;min-width:0;">
     <col>
-    <col style="width:105px;min-width:0;">
+    <col style="width:100px;min-width:0;">
     <col style="width:42px;min-width:0;">
   </colgroup>
   <thead>
