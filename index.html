@@ -282,7 +282,13 @@
         position: relative;
         transition: filter 0.2s ease;
       }
-      .tab-emisora:first-child { border-right: 1px solid rgba(197,205,232,0.75); }
+      .tab-emisora:first-child {
+        border-right: 1px solid rgba(245,240,232,0.55);
+        background: linear-gradient(100deg, #37B4D7 0%, #62C8D2 52%, #8DC971 100%);
+      }
+      .tab-emisora:last-child {
+        background: linear-gradient(100deg, #5E3B86 0%, #8153A2 52%, #A16DB7 100%);
+      }
       .tab-emisora:hover { filter: brightness(1.04); }
       .tab-emisora:focus-visible { outline: 2px solid rgba(43,69,144,0.55); outline-offset: -2px; }
       .emisora-tarjeta {
