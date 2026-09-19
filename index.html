@@ -267,7 +267,7 @@
         box-sizing: border-box;
         border-radius: 8px;
         overflow: hidden;
-        background: #F5F0E8;
+        background: transparent;
         box-shadow: 0 3px 10px rgba(0,0,0,0.08);
       }
       .tab-emisora {
@@ -276,7 +276,7 @@
         padding: 0 10px;
         cursor: pointer;
         border: none;
-        background: #F5F0E8;
+        background: transparent;
         color: transparent;
         outline: none;
         position: relative;
@@ -293,15 +293,15 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background: #F5F0E8;
+        background: transparent;
       }
       .hoja-radio {
         position: absolute;
         z-index: 0;
-        inset: 6px 12px;
-        border-radius: 4px;
-        transform: rotate(-1deg);
-        box-shadow: 0 3px 7px rgba(0,0,0,0.18);
+        inset: 0;
+        border-radius: 0;
+        transform: none;
+        box-shadow: none;
       }
       .hoja-copan {
         background: linear-gradient(100deg, #37B4D7 0%, #62C8D2 52%, #8DC971 100%);
@@ -324,7 +324,7 @@
       .tab-emisora.activa-tab .emisora-tarjeta { box-shadow: inset 0 -3px 0 rgba(43,69,144,0.55); }
       @media (max-width: 480px) {
         .tab-emisora { padding: 0 6px; }
-        .hoja-radio { inset: 7px 7px; }
+        .hoja-radio { inset: 0; }
         .logo-emisora { max-height: 30px; }
       }
       /* Widget oculto (tecnologia intacta) */
