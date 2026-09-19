@@ -252,7 +252,7 @@
       }
       .header-logo { width: 72px !important; height: 72px !important; object-fit: contain; }
       #logo-copan, #logo-gic { width: 75px !important; height: 75px !important; }
-      .header-center { text-align: center; flex: 1; transform: translateY(7px); }
+      .header-center { text-align: center; flex: 1; transform: translateY(11px); }
       .header-center h1 { font-size: 1rem !important; color: #2B4590 !important; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px; }
       #reloj { font-size: 1.3rem !important; color: #1a3a7a !important; font-weight: bold; letter-spacing: 1px; }
 
@@ -326,7 +326,7 @@
         object-fit: contain;
         filter: drop-shadow(0 2px 3px rgba(0,0,0,0.24));
       }
-      .logo-ritmo-card { max-width: 40%; max-height: 34px; }
+      .logo-ritmo-card { max-width: 38%; max-height: 31px; position: relative; top: 3px; }
       /* La emisora seleccionada debe reconocerse de inmediato, sin añadir texto. */
       .tab-emisora:not(.activa-tab) { opacity: 0.72; filter: saturate(0.78) brightness(0.92); }
       .tab-emisora.activa-tab { opacity: 1; filter: none; z-index: 2; }
@@ -367,7 +367,8 @@
 .bg-azul { background-color: #0070C0 !important; color: #fff !important; }
 .bg-verde { background-color: #00B050 !important; color: #fff !important; }
 
-  /* Radio Ritmo: idéntica a tabla Copán */
+  /* Radio Ritmo y Copán Stereo comparten el mismo tamaño tipográfico */
+  #tabla-menciones, #tabla-ritmo { font-size: 0.93em; }
   #tabla-ritmo { width: 100%; max-width: 620px; margin: 0 auto 10px auto; border-collapse: collapse; font-size: 0.93em; }
 
   /* Fondo claro original para el recuadro de los logos */
