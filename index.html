@@ -940,20 +940,16 @@ const activas = [
 { hora:"8:50 AM",  min:8*60+50,  cliente:"Jireth (L-V)",             vence:"08/10/2026", turno:"manana" },
 { hora:"9:10 AM",  min:9*60+10,  cliente:"Subway (L-S)",             vence:"30/09/2026",  turno:"manana" },
 { hora:"9:45 AM",  min:9*60+45,  cliente:"Jireth (L-V)",             vence:"08/10/2026", turno:"manana" },
-  { hora:"9:50 AM",  min:9*60+50,  cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"manana" },
 
 { hora:"10:10 AM", min:10*60+10, cliente:"Hotel Fransol (L-D)", vence:"29/10/2026", turno:"manana" },
 { hora:"10:15 AM", min:10*60+15, cliente:"Subway (L-S)",             vence:"30/09/2026",  turno:"manana" },
-  { hora:"10:25 AM", min:10*60+25, cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"manana" },
 
 { hora:"11:45 AM", min:11*60+45, cliente:"Hotel Fransol (L-D)", vence:"29/10/2026", turno:"mediodia", bg:"amarillo-suave" },
 { hora:"12:05 PM", min:12*60+5,  cliente:"Espresso Americano (L-S)", vence:"Indefinido",  turno:"mediodia", bg:"amarillo-suave" },
-  { hora:"1:40 PM",  min:13*60+40, cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"tarde" },
 
 { hora:"1:50 PM", min:13*60+50, cliente:"INE (L-S)", vence:"Indefinido", turno:"tarde" },
 
 { hora:"2:05 PM",  min:14*60+5,  cliente:"Espresso Americano (L-S)", vence:"Indefinido",  turno:"tarde" },
-  { hora:"2:40 PM",  min:14*60+40, cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"tarde" },
 
 { hora:"2:50 PM", min:14*60+50, cliente:"Hotel Fransol (L-D)", vence:"29/10/2026", turno:"tarde" },
 { hora:"3:05 PM",  min:15*60+5,  cliente:"Espresso Americano (L-S)", vence:"Indefinido",  turno:"tarde" },
@@ -972,6 +968,11 @@ const lrdr = [
 ];
 
 const vencidas = [
+  { hora:"9:50 AM",  min:9*60+50,  cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"manana" },
+  { hora:"10:25 AM", min:10*60+25, cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"manana" },
+  { hora:"1:40 PM",  min:13*60+40, cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"tarde" },
+  { hora:"2:40 PM",  min:14*60+40, cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"tarde" },
+
 { hora:"6:45 AM",  min:6*60+45,  cliente:"Banpaís (L-S)",            vence:"14/10/2026",  turno:"madrugada" },
   { hora:"7:40 AM",  min:7*60+40,  cliente:"Banpaís (L-S)",            vence:"14/10/2026",  turno:"madrugada" },
 { hora:"8:45 AM",  min:8*60+45,  cliente:"Banpaís (L-S)",            vence:"14/10/2026",  turno:"manana" },
@@ -1183,15 +1184,16 @@ function actualizar() {
 const activasRitmo = [
   { hora:"8:45 AM",  min:8*60+45,  cliente:"Laboratorio Bueso Arias (L-D)", vence:"20/10/2026", turno:"manana" },
   { hora:"9:15 AM",  min:9*60+15,  cliente:"Hospital El Carmen (L-S)",       vence:"30/09/2026", turno:"manana" },
-  { hora:"9:40 AM",  min:9*60+40,  cliente:"Expo Imagen 2026 Ritmo (L-V)", vence:"25/09/2026", turno:"manana" },
   { hora:"10:10 AM", min:10*60+10, cliente:"Hotel Fransol (L-D)",             vence:"29/10/2026", turno:"manana" },
-  { hora:"10:20 AM", min:10*60+20, cliente:"Expo Imagen 2026 Ritmo (L-V)", vence:"25/09/2026", turno:"manana" },
   { hora:"10:45 AM", min:10*60+45, cliente:"Hospital El Carmen (L-S)",       vence:"30/09/2026", turno:"manana" },
   { hora:"11:45 AM", min:11*60+45, cliente:"Hotel Fransol (L-D)",             vence:"29/10/2026", turno:"mediodia" },
   { hora:"2:45 PM",  min:14*60+45, cliente:"Hotel Fransol (L-D)",             vence:"29/10/2026", turno:"tarde" },
   { hora:"4:40 PM",  min:16*60+40, cliente:"Hotel Fransol (L-D)",             vence:"29/10/2026", turno:"atardecer" },
 ];
 const vencidasRitmo = [
+  { hora:"9:40 AM",  min:9*60+40,  cliente:"Expo Imagen 2026 Ritmo (L-V)", vence:"25/09/2026", turno:"manana" },
+  { hora:"10:20 AM", min:10*60+20, cliente:"Expo Imagen 2026 Ritmo (L-V)", vence:"25/09/2026", turno:"manana" },
+
   { hora:"9:10 AM",  min:9*60+10,  cliente:"Jireth (S)",                    vence:"12/09/2026", turno:"manana" },
 { hora:"9:20 AM", min:9*60+20, cliente:"INE (S)", vence:"Indefinido", turno:"manana" },
 { hora:"10:40 AM", min:10*60+40, cliente:"INE (S)", vence:"Indefinido", turno:"manana" },
