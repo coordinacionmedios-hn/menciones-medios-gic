@@ -981,13 +981,13 @@ const activas = [
 ];
 
 const lrdr = [
-  { hora:"4:10 PM", min:16*60+10, cliente:"Laboratorio Bueso Arias", vence:"20/10/2026" },
-  { hora:"5:20 PM", min:17*60+20, cliente:"Laboratorio Bueso Arias", vence:"20/10/2026" },
+  { hora:"4:10 PM", min:16*60+10, cliente:"Laboratorio Bueso Arias (M-J)", vence:"20/10/2026" },
+  { hora:"5:20 PM", min:17*60+20, cliente:"Laboratorio Bueso Arias (M-J)", vence:"20/10/2026" },
 ];
 
 const vencidas = [
-  { hora:"4:25 PM", min:16*60+25, cliente:"Expo Imagen 2026", vence:"25/09/2026" },
-  { hora:"5:10 PM", min:17*60+10, cliente:"Expo Imagen 2026", vence:"25/09/2026" },
+  { hora:"4:25 PM", min:16*60+25, cliente:"Expo Imagen 2026 (M-J)", vence:"25/09/2026" },
+  { hora:"5:10 PM", min:17*60+10, cliente:"Expo Imagen 2026 (M-J)", vence:"25/09/2026" },
   { hora:"9:50 AM",  min:9*60+50,  cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"manana" },
   { hora:"10:25 AM", min:10*60+25, cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"manana" },
   { hora:"1:40 PM",  min:13*60+40, cliente:"Expo Imagen 2026 (L-V)", vence:"25/09/2026", turno:"tarde" },
@@ -1122,7 +1122,7 @@ lrdr.forEach((m, idx) => {
 
 // Modal
 function datosCliente(cliente) {
-  const match = cliente.match(/\s*\((L-V|L-S|L-D|S)\)\s*$/);
+  const match = cliente.match(/\s*\((L-V|L-S|L-D|M-J|S)\)\s*$/);
   if (!match) return { nombre: cliente, dias: "" };
   return { nombre: cliente.slice(0, match.index).trim(), dias: "(" + match[1] + ")" };
 }
