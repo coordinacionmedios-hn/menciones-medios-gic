@@ -390,7 +390,7 @@
 </style>
 <style id="blackout-screen">
 /* Pantalla negra; se conserva intacto el tablero y todo su contenido en el repositorio. */
-html, body { margin:0 !important; width:100%; min-height:100%; background:#000 !important; }
+html, body { margin:0 !important; width:100%; height:100vh !important; min-height:100%; overflow:hidden !important; background:#000 !important; }
 body > * { visibility:hidden !important; }
 body::after {
   content:""; position:fixed; inset:0; width:100vw; height:100vh;
