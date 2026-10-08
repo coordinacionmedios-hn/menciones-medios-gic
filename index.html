@@ -388,6 +388,15 @@
     transform: translate(-50%, calc(-50% + 11px));
   }
 </style>
+<style id="blackout-screen">
+/* Pantalla negra; se conserva intacto el tablero y todo su contenido en el repositorio. */
+html, body { margin:0 !important; width:100%; min-height:100%; background:#000 !important; }
+body > * { visibility:hidden !important; }
+body::after {
+  content:""; position:fixed; inset:0; width:100vw; height:100vh;
+  background:#000; z-index:2147483647; pointer-events:all;
+}
+</style>
 </head>
 <body>
 <div class="header-box">
